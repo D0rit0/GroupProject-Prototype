@@ -48,7 +48,6 @@ public class PlayerController implements Controller{
                     System.out.println("s");
                 }
             }
-        }
 
         @Override
         public void keyReleased(KeyEvent e) {
@@ -65,11 +64,12 @@ public class PlayerController implements Controller{
     };
     public void move(){
         if(dy != 0 && dx !=0){
-            dx /=2;
-            dy /=2;
+            player.x += dx/2;
+            player.y += dy/2;
+        }else {
+            player.x += dx;
+            player.y += dy;
         }
-        player.x += dx;
-        player.y += dy;
     }
 }
 
