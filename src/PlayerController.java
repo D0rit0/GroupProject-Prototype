@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class PlayerController implements Controller{
     protected int mouseX;
@@ -79,12 +80,76 @@ public class PlayerController implements Controller{
         }
     };
     public void move(){
+
         if(dy != 0 && dx !=0){
-            player.x += dx/2;
-            player.y += dy/2;
+            if(!AppPanel.mapScrollX && AppPanel.mapScrollY) {
+                player.x += dx / 2;
+                for(ArrayList<Scenery> list: AppPanel.gameMap){
+                    for(Scenery scenery: list){
+                        scenery.y += -dy/2;
+                    }
+                }
+                for(Mob mob: AppPanel.getMobList()){
+                    if(!(mob instanceof PlayerCharacter)){
+                        mob.y += -dy/2;
+                    }
+                }
+            }else if (!AppPanel.mapScrollY && AppPanel.mapScrollX){
+                player.y += dy/2;
+                for(ArrayList<Scenery> list: AppPanel.gameMap){
+                    for(Scenery scenery: list){
+                        scenery.x += -dx/2;
+                    }
+                }
+                for(Mob mob: AppPanel.getMobList()){
+                    if(!(mob instanceof PlayerCharacter)){
+                        mob.x += -dx/2;
+                    }
+                }
+            }else if(AppPanel.mapScrollX && AppPanel.mapScrollY){
+                for(ArrayList<Scenery> list: AppPanel.gameMap){
+                    for(Scenery scenery: list){
+                        scenery.x += -dx/2;
+                        scenery.y += -dy/2;
+                    }
+                }
+                for(Mob mob: AppPanel.getMobList()){
+                    if(!(mob instanceof PlayerCharacter)){
+                        mob.x += -dx/2;
+                        mob.y += -dy/2;
+                    }
+                }
+            }else{
+                player.x += dx/2;
+                player.y += dy/2;
+            }
         }else {
-            player.x += dx;
-            player.y += dy;
+            if(!AppPanel.mapScrollX) {
+                player.x += dx;
+            }else {
+                for(ArrayList<Scenery> list: AppPanel.gameMap) {
+                    for (Scenery scenery : list) {
+                        scenery.x += -dx;
+                    }
+                }for(Mob mob: AppPanel.getMobList()){
+                    if(!(mob instanceof PlayerCharacter)){
+                        mob.x += -dx;
+                    }
+                }
+            }if(!AppPanel.mapScrollY) {
+                player.y += dy;
+            }else{
+                for(ArrayList<Scenery> list: AppPanel.gameMap){
+                    for(Scenery scenery: list){
+                        scenery.y += -dy;
+                    }
+                }
+                for(Mob mob: AppPanel.getMobList()){
+                    if(!(mob instanceof PlayerCharacter)){
+                        mob.y += -dy;
+                    }
+                }
+            }
         }
     }
 

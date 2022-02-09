@@ -10,12 +10,15 @@ public class AppPanel extends JPanel {
     private final int height = 800;
     private final int centerX = width/2;
     private final int centerY = height/2;
-    private final ArrayList<Mob> mobList = new ArrayList<>();
+    private static final ArrayList<Mob> mobList = new ArrayList<>();
     private final ArrayList<Scenery> sceneryList = new ArrayList<>();
+    public static boolean mapScrollX = false;
+    public static boolean mapScrollY = false;
+
     public static PlayerCharacter player;
     public static PlayerController playerController = new PlayerController();
     public ArrayList<Tree> treeList = new ArrayList<>();
-    public ArrayList<ArrayList<Scenery>> gameMap = new ArrayList<>();
+    public static ArrayList<ArrayList<Scenery>> gameMap = new ArrayList<>();
     private void mapInit(){
         for(int i = 0; i < 25; i++){
             gameMap.add(new ArrayList<>());
@@ -135,8 +138,22 @@ public class AppPanel extends JPanel {
             player.setBottom(player.y+player.height-2);
         }
     }
+    public static ArrayList<Mob> getMobList(){
+        return mobList;
+    }
+    private boolean checkScrollY(){
+        return player.y < 32*3 && PlayerController.getDy() == -2 || player.y > height -32*4 && PlayerController.getDy() == 2;
+    }
+    private boolean checkScrollX(){
+        return player.x < 32*3 && PlayerController.getDx() == -2 || player.x > width -32*4 && PlayerController.getDx() == 2;
+    }
+    private void checkScroll(){
+        mapScrollX = checkScrollX();
+        mapScrollY = checkScrollY();
+    }
 
     void update(){
+        checkScroll();
         playerController.move();
         for(ArrayList<Scenery> list: gameMap){
             for(Scenery scenery:list) {
