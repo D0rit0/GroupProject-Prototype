@@ -5,7 +5,7 @@ import java.io.IOException;
 public abstract class Scenery extends Entity {
     protected int ssCol = 1;
     protected int ssRow = 1;
-    private BufferedImage spriteSheet = null;
+    protected BufferedImage spriteSheet = null;
     Scenery(int x, int y){
         super(x,y);
     }

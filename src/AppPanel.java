@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.event.TreeExpansionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class AppPanel extends JPanel {
     private ArrayList<Scenery> sceneryList = new ArrayList<>();
     public static PlayerCharacter player;
     public static PlayerController playerController = new PlayerController();
+    public ArrayList<Tree> treeList = new ArrayList<>();
     public ArrayList<ArrayList<Scenery>> gameMap = new ArrayList<>();
     private void mapInit(){
         for(int i = 0; i < 25; i++){
@@ -25,6 +27,9 @@ public class AppPanel extends JPanel {
             }else {
                 for (int j = 0; j < 25; j++) {
                     gameMap.get(i).add(new Ground(i * 32, j * 32, (new Random()).nextInt(7)+1,(new Random()).nextInt(3)+1));
+                    if((new Random().nextInt(40)+1)==3){
+                        gameMap.get(i).add(new Tree(i*32,j*32, (new Random()).nextInt(3)+1));
+                    }
                 }
             }
         }
@@ -52,7 +57,16 @@ public class AppPanel extends JPanel {
         g2.drawLine((int)player.getCenter().getX(),(int)player.getCenter().getY(),playerController.mouseX,playerController.mouseY);
         for(ArrayList<Scenery> list: gameMap){
             for(Scenery scenery: list) {
-                g2.drawImage(scenery.getImage(), scenery.x, scenery.y, this);
+                if(scenery instanceof Ground) {
+                    g2.drawImage(scenery.getImage(), scenery.x, scenery.y, this);
+                }
+            }
+        }
+        for(ArrayList<Scenery> list: gameMap){
+            for(Scenery scenery: list) {
+                if(scenery instanceof Tree) {
+                    g2.drawImage(scenery.getImage(), scenery.x, scenery.y, this);
+                }
             }
         }
         for(Mob entity: mobList){
@@ -68,6 +82,7 @@ public class AppPanel extends JPanel {
         addMouseListener(playerController.MyMouseAdapter);
         addMouseMotionListener(playerController.MyMouseAdapter);
         mobList.add(player);
+        mobList.add(new PeacefulAnimal(player.x+32, player.y, "Cat"));
         addKeyListener(playerController.MyKeyAdapter);
         System.out.print(""+player.getTop() + player.getBottom() + player.getLeft() + player.getRight());
     }
