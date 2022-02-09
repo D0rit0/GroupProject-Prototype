@@ -19,14 +19,15 @@ public class AppPanel extends JPanel {
     public ArrayList<ArrayList<Scenery>> gameMap = new ArrayList<>();
     private void mapInit(){
         for(int i = 0; i < 25; i++){
-            gameMap.add(new ArrayList<Scenery>());
+            gameMap.add(new ArrayList<>());
             if(i == 3 || i == 2){
                 for(int j = 0; j < 25; j++){
                     gameMap.get(i).add(new Ground(i*32,j*32,1,(new Random()).nextInt(3)+6));
                 }
             }else {
                 for (int j = 0; j < 25; j++) {
-                    gameMap.get(i).add(new Ground(i * 32, j * 32, (new Random()).nextInt(7)+1,(new Random()).nextInt(3)+1));
+                    gameMap.get(i).add(new Ground(i * 32, j * 32, (new Random()).nextInt(7)+1,
+                            (new Random()).nextInt(3)+1));
                     if((new Random().nextInt(40)+1)==3){
                         gameMap.get(i).add(new Tree(i*32,j*32, (new Random()).nextInt(3)+1));
                     }if((new Random().nextInt(100)+1)==5){
@@ -56,7 +57,8 @@ public class AppPanel extends JPanel {
         g2.setColor(Color.white);
         g2.drawString("dx:" + PlayerController.getDx() + " dy: " + PlayerController.getDy(),0,20);
         g2.drawString("x:" + player.x + " y: " + player.y,0,40);
-        g2.drawLine((int)player.getCenter().getX(),(int)player.getCenter().getY(),playerController.mouseX,playerController.mouseY);
+        g2.drawLine((int)player.getCenter().getX(),(int)player.getCenter().getY(),playerController.mouseX,
+                playerController.mouseY);
         for(ArrayList<Scenery> list: gameMap){
             for(Scenery scenery: list) {
                 if(scenery instanceof Ground) {
@@ -109,16 +111,16 @@ public class AppPanel extends JPanel {
         Rectangle r2 = e.getBounds();
         if (r2.intersects(r1) && PlayerController.getDx() == 2) {
             playerController.setDx(0);
-            player.setRight(e.getLeft());
+            player.setRight(player.x+player.width-2);
         } else if (r1.intersects(r2) && PlayerController.getDx() == -2) {
             playerController.setDx(0);
-            player.setLeft(e.getRight());
+            player.setLeft(player.x+2);
         } if (r1.intersects(r2) && PlayerController.getDy() == -2) {
             playerController.setDy(0);
-            player.setTop(e.getBottom());
+            player.setTop(player.y+2);
         } if (r1.intersects(r2) && PlayerController.getDy() == 2) {
             playerController.setDy(0);
-            player.setBottom(e.getTop());
+            player.setBottom(player.y+player.height-2);
         }
     }
 
@@ -137,8 +139,5 @@ public class AppPanel extends JPanel {
         }if(player.x<0)
             player.x=width - player.width;
         repaint();
-        //System.out.println();
-        //System.out.println(player.getX()+ ", " +player.getX());
-        //System.out.println(mouseX + mouseY);
     }
 }

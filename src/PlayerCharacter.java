@@ -11,6 +11,8 @@ public class PlayerCharacter extends Mob{
 
     private PlayerCharacter(int x, int y){
         super(x-32,y);
+        super.ssRow=2;
+        super.ssCol=1;
         loadImage(imagePath);
         grounded = false;
     }

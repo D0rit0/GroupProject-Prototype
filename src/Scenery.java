@@ -3,9 +3,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public abstract class Scenery extends Entity {
-    protected int ssCol = 1;
-    protected int ssRow = 1;
-    protected BufferedImage spriteSheet = null;
     Scenery(int x, int y){
         super(x,y);
     }
@@ -15,18 +12,6 @@ public abstract class Scenery extends Entity {
 
     private int changeIn(int p1, int p2){
         return p2 - p1;
-    }
-
-    public void loadImage(String path){
-        BufferedImageLoader loader = new BufferedImageLoader();
-        try{
-            spriteSheet = loader.loadImage(path);
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-        SpriteSheet ss = new SpriteSheet(spriteSheet);
-        this.image = ss.grabImage(ssCol, ssRow, 32,32);
-        getImageDimensions();
     }
 
     public void checkCollide(){

@@ -39,26 +39,27 @@ public class PlayerController implements Controller{
             int key = e.getKeyCode();
                 if(key == KeyEvent.VK_A){
                     dx = -2;
-                    player.changeImage(1,2);
+                    player.changeImage(player.ssCol, player.ssRow=2);
                     player.moving = true;
                 }
                 else if(key == KeyEvent.VK_D){
                     dx = 2;
-                    player.changeImage(1,3);
+                    player.changeImage(player.ssCol,player.ssRow=3);
                     player.moving = true;
                     System.out.println("d");
                 }
                 if(key == KeyEvent.VK_W) {
-                    player.changeImage(1,4);
+                    player.changeImage(player.ssCol,player.ssRow=4);
                     dy = -2;
                     player.moving = true;
                 }
                 else if(key == KeyEvent.VK_S) {
-                    player.changeImage(1,1);
+                    player.changeImage(player.ssCol, player.ssRow=1);
                     dy = 2;
                     player.moving = true;
                     System.out.println("s");
                 }
+                player.animationTimer.start();
 
             }
 
@@ -73,6 +74,8 @@ public class PlayerController implements Controller{
                     dy = 0; player.moving = false;
                 }
             }
+            player.animationTimer.stop();
+            player.changeImage(2, 1);
         }
     };
     public void move(){
