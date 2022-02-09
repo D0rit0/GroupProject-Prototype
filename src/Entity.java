@@ -66,7 +66,7 @@ public abstract class Entity {
         return new Point((int)(x+width*.5), (int)(y+height*.5));
     }
 
-    public abstract void checkCollide();
+    public void checkCollide(){}
 
 
 }

@@ -47,6 +47,7 @@ public class PlayerController implements Controller{
                     player.moving = true;
                     System.out.println("s");
                 }
+
             }
 
         @Override

@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.ArrayList;
 
 public class PlayerCharacter extends Mob{
@@ -20,7 +21,10 @@ public class PlayerCharacter extends Mob{
         }
         return instance;
     }
-    public void checkCollide(){
+    public void checkCollide(Entity e){
+        Rectangle r1 = this.getBounds();
+        Rectangle r2 = e.getBounds();
 
     };
 }
+`
