@@ -10,9 +10,8 @@ public class AppPanel extends JPanel {
     private final int height = 800;
     private final int centerX = width/2;
     private final int centerY = height/2;
-    private final int delay = 1;
-    private ArrayList<Mob> mobList = new ArrayList<>();
-    private ArrayList<Scenery> sceneryList = new ArrayList<>();
+    private final ArrayList<Mob> mobList = new ArrayList<>();
+    private final ArrayList<Scenery> sceneryList = new ArrayList<>();
     public static PlayerCharacter player;
     public static PlayerController playerController = new PlayerController();
     public ArrayList<Tree> treeList = new ArrayList<>();
@@ -46,6 +45,7 @@ public class AppPanel extends JPanel {
         this.setPreferredSize(new Dimension(800, 800));
         this.setBackground(Color.BLACK);
         ActionListener timerTask = e -> update();
+        int delay = 1;
         gameTimer = new Timer(delay, timerTask);
         gameTimer.start();
     }
@@ -81,7 +81,19 @@ public class AppPanel extends JPanel {
             }
         }
         for(Mob entity: mobList){
-            g2.drawImage(entity.getImage(),entity.x, entity.y, this);
+            if(entity instanceof PlayerCharacter) {
+                for(ArrayList<Scenery> list: gameMap) {
+                    for (Scenery scenery : list) {
+                        if (scenery instanceof Tree) {
+                            if (entity.getY() < scenery.getY()+64)
+                            g2.drawImage(entity.getImage(), entity.x, entity.y, this);
+                            g2.drawImage(scenery.getImage(), scenery.x, scenery.y, this);
+                        }
+                    }
+                }
+            }else {
+                g2.drawImage(entity.getImage(), entity.x, entity.y, this);
+            }
         }
     }
     public static PlayerController getPlayerController(){

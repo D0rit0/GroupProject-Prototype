@@ -2,7 +2,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class PlayerCharacter extends Mob{
-    private final String imagePath = "src\\resources\\Male\\Male 01-1.png";
     //when this program is ran... an instance of PlayerCharacter is created
     // using a private constructor allowing for only one instance to be created
     private static PlayerCharacter instance;
@@ -13,6 +12,7 @@ public class PlayerCharacter extends Mob{
         super(x-32,y);
         super.ssRow=2;
         super.ssCol=1;
+        String imagePath = "src\\resources\\Male\\Male 01-1.png";
         loadImage(imagePath);
         grounded = false;
     }
@@ -23,5 +23,10 @@ public class PlayerCharacter extends Mob{
             instance = new PlayerCharacter(400,400);
         }
         return instance;
+    }
+
+    @Override
+    public Rectangle getBounds() {
+        return new Rectangle(x+8,y+16,width-12,height-16);
     }
 }

@@ -1,7 +1,9 @@
+import java.awt.*;
 import java.io.IOException;
 
 public class Tree extends Scenery{
     private int width, height;
+    private final int heightC;
     Tree(int x, int y, int size) {
         super(x, y);
         imagePath = "src\\resources\\atlas_32x.png";
@@ -25,6 +27,7 @@ public class Tree extends Scenery{
                 height=64;
             }
         }
+        heightC=height-32;
         loadImage(imagePath);
     }
     public void loadImage(String path){
@@ -37,5 +40,9 @@ public class Tree extends Scenery{
         SpriteSheet ss = new SpriteSheet(spriteSheet);
         this.image = ss.grabImage(ssCol, ssRow, width,height);
         getImageDimensions();
+    }
+    @Override
+    public Rectangle getBounds() {
+        return new Rectangle(x,y+32,width,heightC);
     }
 }

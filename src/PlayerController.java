@@ -75,7 +75,7 @@ public class PlayerController implements Controller{
                 }
             }
             player.animationTimer.stop();
-            player.changeImage(2, 1);
+            player.changeImage(2, player.ssRow);
         }
     };
     public void move(){
