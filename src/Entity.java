@@ -32,10 +32,6 @@ public abstract class Entity {
         this.image = ii.getImage();
         getImageDimensions();
     }
-    public void changeImage(String newImage){
-        loadImage(newImage);
-        getImageDimensions();
-    }
 
     public Image getImage(){
         return image;

@@ -2,10 +2,11 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class PlayerCharacter extends Mob{
-    private final String imagePath = "src\\resources\\warrior.png";
+    private final String imagePath = "src\\resources\\Male\\Male 01-1.png";
     //when this program is ran... an instance of PlayerCharacter is created
     // using a private constructor allowing for only one instance to be created
     private static PlayerCharacter instance;
+    private final PlayerController playerController = AppPanel.getPlayerController();
     //InputController playerController = new InputController();
 
     private PlayerCharacter(int x, int y){
@@ -21,9 +22,4 @@ public class PlayerCharacter extends Mob{
         }
         return instance;
     }
-    public void checkCollide(Entity e){
-        Rectangle r1 = this.getBounds();
-        Rectangle r2 = e.getBounds();
-
-    };
 }

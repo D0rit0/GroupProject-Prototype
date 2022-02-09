@@ -8,10 +8,12 @@ import java.awt.event.MouseEvent;
 public class PlayerController implements Controller{
     protected int mouseX;
     protected int mouseY;
-    private int dx = 0;
-    private int dy = 0;
+    private static int dx = 0;
+    private static int dy = 0;
+
 
     private final PlayerCharacter player = PlayerCharacter.getInstance();
+
 
     MouseInputAdapter MyMouseAdapter = new MouseInputAdapter(){
 
@@ -23,6 +25,12 @@ public class PlayerController implements Controller{
             System.out.println("mouse Entered");
         }
     };
+    public static int getDx(){
+        return dx;
+    }
+    public static int getDy(){
+        return dy;
+    }
 
 
     KeyAdapter MyKeyAdapter = new KeyAdapter() {
@@ -31,18 +39,22 @@ public class PlayerController implements Controller{
             int key = e.getKeyCode();
                 if(key == KeyEvent.VK_A){
                     dx = -2;
+                    player.changeImage(1,2);
                     player.moving = true;
                 }
                 else if(key == KeyEvent.VK_D){
                     dx = 2;
+                    player.changeImage(1,3);
                     player.moving = true;
                     System.out.println("d");
                 }
                 if(key == KeyEvent.VK_W) {
+                    player.changeImage(1,4);
                     dy = -2;
                     player.moving = true;
                 }
                 else if(key == KeyEvent.VK_S) {
+                    player.changeImage(1,1);
                     dy = 2;
                     player.moving = true;
                     System.out.println("s");
@@ -71,6 +83,13 @@ public class PlayerController implements Controller{
             player.x += dx;
             player.y += dy;
         }
+    }
+
+    public void setDx(int newDx) {
+        dx=newDx;
+    }
+    public void setDy(int newDy) {
+        dx=newDy;
     }
 }
 
