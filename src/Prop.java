@@ -1,9 +1,12 @@
 import java.io.IOException;
 
-public class Prop extends Scenery{
+public abstract class Prop extends Scenery{
+    protected int propW, propH;
     Prop(int x, int y) {
         super(x, y);
-        loadImage("src\\resources\\Texture\\TX Props-bigrock.png");
+    }
+    Prop(int x, int y, boolean visible) {
+        super(x, y);
     }
     public void loadImage(String path) {
         BufferedImageLoader loader = new BufferedImageLoader();

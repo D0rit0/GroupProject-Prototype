@@ -7,12 +7,7 @@ import java.io.IOException;
 public abstract class Mob extends Entity {
     protected boolean moving = false;
     protected boolean grounded = true;
-    protected Timer animationTimer = new Timer(150, new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            animate();
-        }
-    });
+    protected Timer animationTimer = new Timer(150, e -> animate());
 
     public Mob(int x, int y){
         super(x,y);
@@ -37,7 +32,7 @@ public abstract class Mob extends Entity {
         y= newBottom-height;
     }
 
-    public void animate(){
+    private void animate(){
         if(ssCol == 2){
             ssCol=1;
         }else if (ssCol==1){

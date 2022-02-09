@@ -33,7 +33,7 @@ public class AppPanel extends JPanel {
                     if((new Random().nextInt(40)+1)==3){
                         gameMap.get(i).add(new Tree(i*32,j*32, (new Random()).nextInt(3)+1));
                     }if((new Random().nextInt(100)+1)==5){
-                        gameMap.get(i).add(new Prop(i*32,j*32));
+                        gameMap.get(i).add(new BigRock(i*32,j*32));
                     }
                 }
             }
@@ -126,26 +126,80 @@ public class AppPanel extends JPanel {
         Rectangle r2 = e.getBounds();
         if (r2.intersects(r1) && PlayerController.getDx() == 2) {
             playerController.setDx(0);
-            player.setRight(player.x+player.width-2);
+            if (mapScrollX) {
+                for (ArrayList<Scenery> list : AppPanel.gameMap) {
+                    for (Scenery scenery : list) {
+                        scenery.x += 2;
+                    }
+                }
+                for (Mob mob : AppPanel.getMobList()) {
+                    if (!(mob instanceof PlayerCharacter)) {
+                        mob.x += 2;
+                    }
+                }
+            }else {
+                player.setRight(player.x + player.width - 2);
+            }
         } else if (r1.intersects(r2) && PlayerController.getDx() == -2) {
             playerController.setDx(0);
-            player.setLeft(player.x+2);
-        } if (r1.intersects(r2) && PlayerController.getDy() == -2) {
+            if(mapScrollX) {
+                for (ArrayList<Scenery> list : AppPanel.gameMap) {
+                    for (Scenery scenery : list) {
+                        scenery.x -= 2;
+                    }
+                }
+                for (Mob mob : AppPanel.getMobList()) {
+                    if (!(mob instanceof PlayerCharacter)) {
+                        mob.x -= 2;
+                    }
+                }
+            }else {
+                player.setLeft(player.x + 2);
+            }
+        }if (r1.intersects(r2) && PlayerController.getDy() == -2) {
             playerController.setDy(0);
-            player.setTop(player.y+2);
+            if(mapScrollY) {
+                for (ArrayList<Scenery> list : AppPanel.gameMap) {
+                    for (Scenery scenery : list) {
+                        scenery.y -= 2;
+                    }
+                }
+                for (Mob mob : AppPanel.getMobList()) {
+                    if (!(mob instanceof PlayerCharacter)) {
+                        mob.y -= 2;
+                    }
+                }
+            }else {
+                player.setTop(player.y + 2);
+            }
         } if (r1.intersects(r2) && PlayerController.getDy() == 2) {
             playerController.setDy(0);
-            player.setBottom(player.y+player.height-2);
+            if(mapScrollY) {
+                for (ArrayList<Scenery> list : AppPanel.gameMap) {
+                    for (Scenery scenery : list) {
+                        scenery.y += 2;
+                    }
+                }
+                for (Mob mob : AppPanel.getMobList()) {
+                    if (!(mob instanceof PlayerCharacter)) {
+                        mob.y += 2;
+                    }
+                }
+            }else {
+                player.setBottom(player.y + player.height - 2);
+            }
         }
     }
     public static ArrayList<Mob> getMobList(){
         return mobList;
     }
     private boolean checkScrollY(){
-        return player.y < 32*3 && PlayerController.getDy() == -2 || player.y > height -32*4 && PlayerController.getDy() == 2;
+        return player.y < 32*3 && PlayerController.getDy() == -2
+                || player.y > height -32*4 && PlayerController.getDy() == 2;
     }
     private boolean checkScrollX(){
-        return player.x < 32*3 && PlayerController.getDx() == -2 || player.x > width -32*4 && PlayerController.getDx() == 2;
+        return player.x < 32*3 && PlayerController.getDx() == -2
+                || player.x > width -32*4 && PlayerController.getDx() == 2;
     }
     private void checkScroll(){
         mapScrollX = checkScrollX();
