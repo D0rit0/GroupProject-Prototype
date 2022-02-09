@@ -29,6 +29,8 @@ public class AppPanel extends JPanel {
                     gameMap.get(i).add(new Ground(i * 32, j * 32, (new Random()).nextInt(7)+1,(new Random()).nextInt(3)+1));
                     if((new Random().nextInt(40)+1)==3){
                         gameMap.get(i).add(new Tree(i*32,j*32, (new Random()).nextInt(3)+1));
+                    }if((new Random().nextInt(100)+1)==5){
+                        gameMap.get(i).add(new Prop(i*32,j*32));
                     }
                 }
             }
@@ -65,6 +67,13 @@ public class AppPanel extends JPanel {
         for(ArrayList<Scenery> list: gameMap){
             for(Scenery scenery: list) {
                 if(scenery instanceof Tree) {
+                    g2.drawImage(scenery.getImage(), scenery.x, scenery.y, this);
+                }
+            }
+        }
+        for(ArrayList<Scenery> list: gameMap){
+            for(Scenery scenery: list) {
+                if(scenery instanceof Prop) {
                     g2.drawImage(scenery.getImage(), scenery.x, scenery.y, this);
                 }
             }
@@ -115,8 +124,11 @@ public class AppPanel extends JPanel {
 
     void update(){
         playerController.move();
-        for(Scenery scenery: sceneryList){
-            checkCollide(scenery);
+        for(ArrayList<Scenery> list: gameMap){
+            for(Scenery scenery:list) {
+                if (scenery instanceof Tree || scenery instanceof Prop)
+                    checkCollide(scenery);
+            }
         }
         if(player.y>height){
             player.y=0;
