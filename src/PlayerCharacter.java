@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class PlayerCharacter extends Mob{
     //when this program is ran... an instance of PlayerCharacter is created
     // using a private constructor allowing for only one instance to be created
+    private String playerName;
     private static PlayerCharacter instance;
     private final PlayerController playerController = AppPanel.getPlayerController();
     //InputController playerController = new InputController();
@@ -27,6 +28,9 @@ public class PlayerCharacter extends Mob{
             instance = new PlayerCharacter(400,400);
         }
         return instance;
+    }
+    public String getPlayerName(){
+        return playerName;
     }
 
     @Override
