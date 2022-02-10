@@ -19,6 +19,8 @@ public class AppPanel extends JPanel {
     public static PlayerController playerController = new PlayerController();
     public ArrayList<Tree> treeList = new ArrayList<>();
     public static ArrayList<ArrayList<Scenery>> gameMap = new ArrayList<>();
+    //Initializes a 2D arraylist that stores the map tiles and props.
+    //Randomly generated WILL CHANGE THIS TO STATIC MAP.
     private void mapInit(){
         for(int i = 0; i < 25; i++){
             gameMap.add(new ArrayList<>());
@@ -41,21 +43,25 @@ public class AppPanel extends JPanel {
     }
     Timer gameTimer;
     AppPanel(){
+        //spawns all needed objects
         mapInit();
         spawnPlayer();
         spawnFloor();
         this.setFocusable(true);
         this.setPreferredSize(new Dimension(800, 800));
         this.setBackground(Color.BLACK);
+        //Game Timer
         ActionListener timerTask = e -> update();
         int delay = 1;
-        gameTimer = new Timer(delay, timerTask);
+        Timer gameTimer = new Timer(delay, timerTask);
         gameTimer.start();
     }
+    //renders graphics
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         draw((Graphics2D) g);
     }
+    //tells graphics render what to render
     private void draw(Graphics2D g2){
         g2.setColor(Color.white);
         g2.drawString("dx:" + PlayerController.getDx() + " dy: " + PlayerController.getDy(),0,20);
@@ -99,14 +105,20 @@ public class AppPanel extends JPanel {
             }
         }
     }
+    //Method to return the playerController so that other classes can access it.
     public static PlayerController getPlayerController(){
         return playerController;
     }
 
+    //initializes player,
+    //player is a singleton
     private void spawnPlayer(){
         player = PlayerCharacter.getInstance();
+        //adds mouseListener from mouseAdapter to the Jpanel
         addMouseListener(playerController.MyMouseAdapter);
+        //adds the mouseMotionListener from the mouseAdapter
         addMouseMotionListener(playerController.MyMouseAdapter);
+        //Adds player to the list of mobs.
         mobList.add(player);
         mobList.add(new PeacefulAnimal(player.x+32, player.y, "Cat"));
         addKeyListener(playerController.MyKeyAdapter);

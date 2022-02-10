@@ -10,9 +10,13 @@ public class PlayerCharacter extends Mob{
 
     private PlayerCharacter(int x, int y){
         super(x-32,y);
-        super.ssRow=2;
-        super.ssCol=1;
-        String imagePath = "src\\resources\\Male\\Male 01-1.png";
+        super.ssRow=12;
+        super.ssCol=26;
+        super.imagePath="src\\resources\\atlas_32x.png";
+        walkState1=25;
+        walkState2=27;
+        restState=26;
+        //String imagePath = "src\\resources\\Male\\Male 01-1.png";
         loadImage(imagePath);
         grounded = false;
     }

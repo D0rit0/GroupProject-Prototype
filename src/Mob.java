@@ -5,6 +5,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public abstract class Mob extends Entity {
+    protected int walkState1;
+    protected int walkState2;
+    protected int restState;
+    protected int leftFace;
+    protected int centerFace;
+    protected int rightFace;
+    protected int rearFace;
+
     protected boolean moving = false;
     protected boolean grounded = true;
     protected Timer animationTimer = new Timer(150, e -> animate());
@@ -32,13 +40,13 @@ public abstract class Mob extends Entity {
         y= newBottom-height;
     }
 
-    private void animate(){
-        if(ssCol == 2){
-            ssCol=1;
-        }else if (ssCol==1){
-            ssCol=3;
-        }else if(ssCol==3){
-            ssCol=2;
+    protected void animate(){
+        if(ssCol == restState){
+            ssCol=walkState1;
+        }else if (ssCol==walkState1){
+            ssCol=walkState2;
+        }else if(ssCol==walkState2){
+            ssCol=restState;
         }
         changeImage(ssCol,ssRow);
     }
