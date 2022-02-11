@@ -1,3 +1,5 @@
+package imageRenderer;
+
 import java.awt.image.BufferedImage;
 
 public class SpriteSheet {

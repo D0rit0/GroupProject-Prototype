@@ -1,6 +1,8 @@
-public class Ground extends Scenery{
+package entities.Scenery;
+
+public class Ground extends Scenery {
     private int tileID;
-    Ground(int x, int y, int ssCol, int ssRow){
+    public Ground(int x, int y, int ssCol, int ssRow){
         super(x,y);
         super.ssCol=ssCol;
         super.ssRow=ssRow;

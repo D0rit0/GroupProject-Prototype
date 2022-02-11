@@ -1,5 +1,14 @@
+import entities.Scenery.Ground;
+import entities.Scenery.Props.BigRock;
+import entities.Scenery.Props.Prop;
+import entities.Scenery.Scenery;
+import entities.Entity;
+import entities.Scenery.Tree;
+import entities.mobs.Mob;
+import entities.mobs.PeacefulAnimal;
+import entities.mobs.PlayerCharacter;
+
 import javax.swing.*;
-import javax.swing.event.TreeExpansionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -8,8 +17,6 @@ import java.util.Random;
 public class AppPanel extends JPanel {
     private final int width = 800;
     private final int height = 800;
-    private final int centerX = width/2;
-    private final int centerY = height/2;
     private static final ArrayList<Mob> mobList = new ArrayList<>();
     private final ArrayList<Scenery> sceneryList = new ArrayList<>();
     public static boolean mapScrollX = false;
@@ -65,27 +72,27 @@ public class AppPanel extends JPanel {
     private void draw(Graphics2D g2){
         g2.setColor(Color.white);
         g2.drawString("dx:" + PlayerController.getDx() + " dy: " + PlayerController.getDy(),0,20);
-        g2.drawString("x:" + player.x + " y: " + player.y,0,40);
+        g2.drawString("x:" + player.getX() + " y: " + player.getY(),0,40);
         g2.drawLine((int)player.getCenter().getX(),(int)player.getCenter().getY(),playerController.mouseX,
                 playerController.mouseY);
         for(ArrayList<Scenery> list: gameMap){
             for(Scenery scenery: list) {
                 if(scenery instanceof Ground) {
-                    g2.drawImage(scenery.getImage(), scenery.x, scenery.y, this);
+                    g2.drawImage(scenery.getImage(), scenery.getX(), scenery.getY(), this);
                 }
             }
         }
         for(ArrayList<Scenery> list: gameMap){
             for(Scenery scenery: list) {
                 if(scenery instanceof Tree) {
-                    g2.drawImage(scenery.getImage(), scenery.x, scenery.y, this);
+                    g2.drawImage(scenery.getImage(), scenery.getX(), scenery.getY(), this);
                 }
             }
         }
         for(ArrayList<Scenery> list: gameMap){
             for(Scenery scenery: list) {
                 if(scenery instanceof Prop) {
-                    g2.drawImage(scenery.getImage(), scenery.x, scenery.y, this);
+                    g2.drawImage(scenery.getImage(), scenery.getX(), scenery.getY(), this);
                 }
             }
         }
@@ -95,13 +102,13 @@ public class AppPanel extends JPanel {
                     for (Scenery scenery : list) {
                         if (scenery instanceof Tree) {
                             if (entity.getY() < scenery.getY()+64)
-                            g2.drawImage(entity.getImage(), entity.x, entity.y, this);
-                            g2.drawImage(scenery.getImage(), scenery.x, scenery.y, this);
+                            g2.drawImage(entity.getImage(), entity.getX(), entity.getY(), this);
+                            g2.drawImage(scenery.getImage(), scenery.getX(), scenery.getY(), this);
                         }
                     }
                 }
             }else {
-                g2.drawImage(entity.getImage(), entity.x, entity.y, this);
+                g2.drawImage(entity.getImage(), entity.getX(), entity.getY(), this);
             }
         }
     }
@@ -120,7 +127,7 @@ public class AppPanel extends JPanel {
         addMouseMotionListener(playerController.MyMouseAdapter);
         //Adds player to the list of mobs.
         mobList.add(player);
-        mobList.add(new PeacefulAnimal(player.x+32, player.y, "Cat"));
+        mobList.add(new PeacefulAnimal(player.getX() +32, player.getY(), "Cat"));
         addKeyListener(playerController.MyKeyAdapter);
         System.out.print(""+player.getTop() + player.getBottom() + player.getLeft() + player.getRight());
     }
@@ -141,64 +148,64 @@ public class AppPanel extends JPanel {
             if (mapScrollX) {
                 for (ArrayList<Scenery> list : AppPanel.gameMap) {
                     for (Scenery scenery : list) {
-                        scenery.x += 2;
+                        scenery.setX(2);
                     }
                 }
                 for (Mob mob : AppPanel.getMobList()) {
                     if (!(mob instanceof PlayerCharacter)) {
-                        mob.x += 2;
+                        mob.setX(-2);
                     }
                 }
             }else {
-                player.setRight(player.x + player.width - 2);
+                player.setRight(player.getX() + player.getWidth() - 2);
             }
         } else if (r1.intersects(r2) && PlayerController.getDx() == -2) {
             playerController.setDx(0);
             if(mapScrollX) {
                 for (ArrayList<Scenery> list : AppPanel.gameMap) {
                     for (Scenery scenery : list) {
-                        scenery.x -= 2;
+                        scenery.setX(-2);
                     }
                 }
                 for (Mob mob : AppPanel.getMobList()) {
                     if (!(mob instanceof PlayerCharacter)) {
-                        mob.x -= 2;
+                        mob.setX(-2);
                     }
                 }
             }else {
-                player.setLeft(player.x + 2);
+                player.setLeft(player.getX() + 2);
             }
         }if (r1.intersects(r2) && PlayerController.getDy() == -2) {
             playerController.setDy(0);
             if(mapScrollY) {
                 for (ArrayList<Scenery> list : AppPanel.gameMap) {
                     for (Scenery scenery : list) {
-                        scenery.y -= 2;
+                        scenery.setY(-2);
                     }
                 }
                 for (Mob mob : AppPanel.getMobList()) {
                     if (!(mob instanceof PlayerCharacter)) {
-                        mob.y -= 2;
+                        mob.setY(-2);
                     }
                 }
             }else {
-                player.setTop(player.y + 2);
+                player.setTop(player.getY() + 2);
             }
         } if (r1.intersects(r2) && PlayerController.getDy() == 2) {
             playerController.setDy(0);
             if(mapScrollY) {
                 for (ArrayList<Scenery> list : AppPanel.gameMap) {
                     for (Scenery scenery : list) {
-                        scenery.y += 2;
+                        scenery.setY(2);
                     }
                 }
                 for (Mob mob : AppPanel.getMobList()) {
                     if (!(mob instanceof PlayerCharacter)) {
-                        mob.y += 2;
+                        mob.setY(2);
                     }
                 }
             }else {
-                player.setBottom(player.y + player.height - 2);
+                player.setBottom(player.getY() + player.getHeight() - 2);
             }
         }
     }
@@ -206,12 +213,12 @@ public class AppPanel extends JPanel {
         return mobList;
     }
     private boolean checkScrollY(){
-        return player.y < 32*3 && PlayerController.getDy() == -2
-                || player.y > height -32*4 && PlayerController.getDy() == 2;
+        return player.getY() < 32*3 && PlayerController.getDy() == -2
+                || player.getY() > height -32*4 && PlayerController.getDy() == 2;
     }
     private boolean checkScrollX(){
-        return player.x < 32*3 && PlayerController.getDx() == -2
-                || player.x > width -32*4 && PlayerController.getDx() == 2;
+        return player.getX() < 32*3 && PlayerController.getDx() == -2
+                || player.getX() > width -32*4 && PlayerController.getDx() == 2;
     }
     private void checkScroll(){
         mapScrollX = checkScrollX();
@@ -227,12 +234,12 @@ public class AppPanel extends JPanel {
                     checkCollide(scenery);
             }
         }
-        if(player.y>height){
-            player.y=0;
-        }if(player.x>width){
-            player.x=0;
-        }if(player.x<0)
-            player.x=width - player.width;
+        if(player.getY() >height){
+            player.setY(0);
+        }if(player.getX() >width){
+            player.setX(0);
+        }if(player.getX() <0)
+            player.setX(width - player.getWidth());
         repaint();
     }
 }

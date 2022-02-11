@@ -1,12 +1,12 @@
-import java.awt.*;
-import java.util.ArrayList;
+package entities.mobs;
 
-public class PlayerCharacter extends Mob{
-    //when this program is ran... an instance of PlayerCharacter is created
+import java.awt.*;
+
+public class PlayerCharacter extends Mob {
+    //when this program is ran... an instance of entities.mobs.PlayerCharacter is created
     // using a private constructor allowing for only one instance to be created
     private String playerName;
     private static PlayerCharacter instance;
-    private final PlayerController playerController = AppPanel.getPlayerController();
     //InputController playerController = new InputController();
 
     private PlayerCharacter(int x, int y){
@@ -21,7 +21,7 @@ public class PlayerCharacter extends Mob{
         loadImage(imagePath);
         grounded = false;
     }
-    //this method allows for other classes to access this single instance of PlayerCharacter
+    //this method allows for other classes to access this single instance of entities.mobs.PlayerCharacter
     //it is also in a synchronized block creating a thread safe environment
     public synchronized static PlayerCharacter getInstance(){
         if (instance == null){
