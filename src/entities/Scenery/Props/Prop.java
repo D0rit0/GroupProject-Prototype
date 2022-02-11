@@ -1,11 +1,17 @@
+package entities.Scenery.Props;
+
+import entities.Scenery.Scenery;
+import imageRenderer.BufferedImageLoader;
+import imageRenderer.SpriteSheet;
+
 import java.io.IOException;
 
-public abstract class Prop extends Scenery{
+public abstract class Prop extends Scenery {
     protected int propW, propH;
     Prop(int x, int y) {
         super(x, y);
     }
-    Prop(int x, int y, boolean visible) {
+    protected Prop(int x, int y, boolean visible) {
         super(x, y);
     }
     public void loadImage(String path) {

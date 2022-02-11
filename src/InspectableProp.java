@@ -1,4 +1,6 @@
-public class InspectableProp extends Prop{
+import entities.Scenery.Props.Prop;
+
+public class InspectableProp extends Prop {
     protected boolean isInspectable;
     InspectableProp(int x, int y, boolean isVisible) {
         super(x, y, isVisible);

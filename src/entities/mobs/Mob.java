@@ -1,8 +1,8 @@
+package entities.mobs;
+
+import entities.Entity;
+
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public abstract class Mob extends Entity {
     protected int walkState1;
@@ -13,9 +13,9 @@ public abstract class Mob extends Entity {
     protected int rightFace;
     protected int rearFace;
 
-    protected boolean moving = false;
+    public boolean moving = false;
     protected boolean grounded = true;
-    protected Timer animationTimer = new Timer(150, e -> animate());
+    public Timer animationTimer = new Timer(150, e -> animate());
 
     public Mob(int x, int y){
         super(x,y);

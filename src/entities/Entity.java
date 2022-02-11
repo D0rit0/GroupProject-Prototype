@@ -1,4 +1,8 @@
-import javax.swing.*;
+package entities;
+
+import imageRenderer.BufferedImageLoader;
+import imageRenderer.SpriteSheet;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -15,13 +19,13 @@ public abstract class Entity {
     protected String imagePath;
     protected Image image;
 
-    Entity(int x, int y){
+    protected Entity(int x, int y){
         this.x = x;
         this.y = y;
         this.isVisible = true;
 
     }
-    Entity(int x, int y, boolean isVisible){
+    protected Entity(int x, int y, boolean isVisible){
         this.x = x;
         this.y = y;
         this.isVisible = isVisible;
@@ -60,6 +64,12 @@ public abstract class Entity {
     public int getY(){
         return y;
     }
+    public int getWidth(){
+        return width;
+    }
+    public int getHeight(){
+        return height;
+    }
     public int getLeft(){
         return x;
     }
@@ -72,8 +82,28 @@ public abstract class Entity {
     public int getBottom(){
         return y+height;
     }
+    public int getSsCol(){
+        return ssCol;
+    }
+    public int getSsRow(){
+        return ssRow;
+    }
+    public int setSsRow(int newRow){
+        ssRow=newRow;
+        return newRow;
+    }
+    public void setSsCol(int newCol){
+        ssCol=newCol;
+    }
     public Point getCenter(){
         return new Point((int)(x+width*.5), (int)(y+height*.5));
+    }
+
+    public void setY(int increment){
+        y+=increment;
+    }
+    public void setX(int increment){
+        x+=increment;
     }
 
     public void checkCollide(){}

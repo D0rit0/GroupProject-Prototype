@@ -1,10 +1,15 @@
+package entities.Scenery;
+
+import imageRenderer.BufferedImageLoader;
+import imageRenderer.SpriteSheet;
+
 import java.awt.*;
 import java.io.IOException;
 
-public class Tree extends Scenery{
+public class Tree extends Scenery {
     private int width, height;
     private final int heightC;
-    Tree(int x, int y, int size) {
+    public Tree(int x, int y, int size) {
         super(x, y);
         imagePath = "src\\resources\\atlas_32x.png";
         switch (size){

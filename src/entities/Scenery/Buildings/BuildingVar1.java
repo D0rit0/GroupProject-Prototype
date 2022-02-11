@@ -1,9 +1,10 @@
-public class BuildingVar2 extends Building{
-    private char color;
-    BuildingVar2(int x, int y, char color) {
+package entities.Scenery.Buildings;
+
+public class BuildingVar1 extends Building {
+    BuildingVar1(int x, int y, char color) {
         super(x, y);
         buildingW = 5;
-        ssRow=4;
+        ssRow=1;
         if(color == 'r'){
             ssCol =32;
         }else{
