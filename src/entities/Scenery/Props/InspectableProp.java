@@ -1,3 +1,5 @@
+package entities.Scenery.Props;
+
 import entities.Scenery.Props.Prop;
 
 public class InspectableProp extends Prop {

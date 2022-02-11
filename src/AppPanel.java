@@ -1,12 +1,8 @@
-import entities.Scenery.Ground;
-import entities.Scenery.Props.BigRock;
-import entities.Scenery.Props.Prop;
-import entities.Scenery.Scenery;
+import entities.Scenery.*;
+import entities.Scenery.Props.*;
 import entities.Entity;
 import entities.Scenery.Tree;
-import entities.mobs.Mob;
-import entities.mobs.PeacefulAnimal;
-import entities.mobs.PlayerCharacter;
+import entities.mobs.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -97,7 +93,7 @@ public class AppPanel extends JPanel {
             }
         }
         for(Mob entity: mobList){
-            if(entity instanceof PlayerCharacter) {
+            /*if(entity instanceof PlayerCharacter) {
                 for(ArrayList<Scenery> list: gameMap) {
                     for (Scenery scenery : list) {
                         if (scenery instanceof Tree) {
@@ -107,9 +103,9 @@ public class AppPanel extends JPanel {
                         }
                     }
                 }
-            }else {
+            }else {*/
                 g2.drawImage(entity.getImage(), entity.getX(), entity.getY(), this);
-            }
+            //}
         }
     }
     //Method to return the playerController so that other classes can access it.
