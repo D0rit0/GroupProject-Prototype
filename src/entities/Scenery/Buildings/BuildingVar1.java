@@ -1,14 +1,12 @@
 package entities.Scenery.Buildings;
 
+import java.awt.*;
+
 public class BuildingVar1 extends Building {
-    BuildingVar1(int x, int y, char color) {
-        super(x, y);
+    public BuildingVar1(int x, int y, char color) {
+        super(x, y, color,2,2,5,3);
         buildingW = 5;
+        buildingH=3;
         ssRow=1;
-        if(color == 'r'){
-            ssCol =32;
-        }else{
-            ssCol =40;
-        }
     }
 }

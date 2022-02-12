@@ -1,3 +1,4 @@
+import entities.Scenery.Buildings.*;
 import entities.Scenery.Ground;
 import entities.Scenery.Props.BigRock;
 import entities.Scenery.Props.Prop;
@@ -12,6 +13,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class AppPanel extends JPanel {
@@ -25,10 +28,12 @@ public class AppPanel extends JPanel {
     public static PlayerCharacter player;
     public static PlayerController playerController = new PlayerController();
     public ArrayList<Tree> treeList = new ArrayList<>();
+    public Map<Building, Point> buildingMap = new HashMap<>();
     public static ArrayList<ArrayList<Scenery>> gameMap = new ArrayList<>();
     //Initializes a 2D arraylist that stores the map tiles and props.
     //Randomly generated WILL CHANGE THIS TO STATIC MAP.
     private void mapInit(){
+        buildingMap.put(new BuildingVar1(464,464,'b'),new Point(1000,1000));
         for(int i = 0; i < 25; i++){
             gameMap.add(new ArrayList<>());
             if(i == 3 || i == 2){
@@ -96,20 +101,11 @@ public class AppPanel extends JPanel {
                 }
             }
         }
+        for(Building building: buildingMap.keySet()){
+            g2.drawImage(building.getImage(),building.getX(),building.getY(), this);
+        }
         for(Mob entity: mobList){
-            if(entity instanceof PlayerCharacter) {
-                for(ArrayList<Scenery> list: gameMap) {
-                    for (Scenery scenery : list) {
-                        if (scenery instanceof Tree) {
-                            if (entity.getY() < scenery.getY()+64)
-                            g2.drawImage(entity.getImage(), entity.getX(), entity.getY(), this);
-                            g2.drawImage(scenery.getImage(), scenery.getX(), scenery.getY(), this);
-                        }
-                    }
-                }
-            }else {
-                g2.drawImage(entity.getImage(), entity.getX(), entity.getY(), this);
-            }
+            g2.drawImage(entity.getImage(), entity.getX(), entity.getY(), this);
         }
     }
     //Method to return the playerController so that other classes can access it.
