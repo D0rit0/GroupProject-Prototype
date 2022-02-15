@@ -51,7 +51,7 @@ public class MapLoader {
         //iterates over layer nodes till it finds the wanted layer.
         for(int i = 0; i < list.getLength(); i++){
             Element node = (Element)list.item(i);
-            if(node.getAttribute("id").equals("1")){
+            if(node.getAttribute("id").equals(Integer.toString(layerNum))){
                 layer = node;
             }
         }
@@ -93,10 +93,11 @@ public class MapLoader {
         System.out.println(Arrays.deepToString(dataArr));
         return dataArr;
     }
-    public static void LoadTextures(){
-        for(int[] array: loadLayerArray(getLayer(1))){
+    public static void LoadTextures(int layer){
+        //loads in textures for layer 1
+        for(int[] array: loadLayerArray(getLayer(layer))){
             for(int textureId: array){
-                if(!textureMap.containsKey(textureId)) {
+                if(!textureMap.containsKey(textureId)&& textureId!=0) {
                     textureMap.put(textureId,SpriteLoader.loadImage("src\\resources\\atlas_32x.png", textureId));
                 }
             }

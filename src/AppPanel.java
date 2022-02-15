@@ -35,23 +35,28 @@ public class AppPanel extends JPanel {
     public Map<Building, Point> buildingMap = new HashMap<>();
     public static ArrayList<ArrayList<Scenery>> gameMap = new ArrayList<>();
     public static Tile[] tileList = new Tile[100*100];
-    public static int[][] map = MapLoader.loadLayerArray(MapLoader.getLayer(1));
+    public static Tile[][] layerList = new Tile[7][100*100];
     //Loads the textures and creates the tile objects using the data given from our map loader class
-    private void mapInit(){
-        MapLoader.LoadTextures();
-        int i =0;
-        for(int y = 0; y<map.length; y++){
-            for(int x = 0; x<map[y].length;x++){
-                try{
-                    tileList[i] = new Tile(x * 32, y * 32, map[y][x]);
-                    i++;
-                }catch(OutOfMemoryError oome){
-                    System.err.println("out of memory");
+    private void mapInit() {
+        int[][] map;
+        for (int temp = 0; temp < 7; temp++) {
+            map = MapLoader.loadLayerArray(MapLoader.getLayer(temp+1));
+            MapLoader.LoadTextures(temp+1);
+            int i = 0;
+            for (int y = 0; y < map.length; y++) {
+                for (int x = 0; x < map[y].length; x++) {
+                    try {
+                        if(map[y][x]!=0) {
+                            layerList[temp][i] = new Tile(x * 32, y * 32, map[y][x]);
+                        }
+                        i++;
+                    } catch (OutOfMemoryError oome) {
+                        System.err.println("out of memory");
+                    }
                 }
             }
         }
         //dumps the map array to save some memory
-        map=null;
         System.out.println("it worked");
     }
     AppPanel(){
@@ -80,9 +85,13 @@ public class AppPanel extends JPanel {
         g2.drawString("x:" + player.getX() + " y: " + player.getY(),0,40);
         g2.drawLine((int)player.getCenter().getX(),(int)player.getCenter().getY(),playerController.mouseX,
                 playerController.mouseY);
-        for(Tile tile: tileList){
-            if(tile.isImageLoaded()&&shouldTileload(tile)&&tile.isVisible()) {
-                g2.drawImage(tile.getImage(), tile.getX(), tile.getY(), this);
+        for(Tile[] tileList: layerList) {
+            for (Tile tile : tileList) {
+                if (tile != null) {
+                    if (tile.isImageLoaded() && shouldTileload(tile) && tile.isVisible()) {
+                        g2.drawImage(tile.getImage(), tile.getX(), tile.getY(), this);
+                    }
+                }
             }
         }
         for(ArrayList<Scenery> list: gameMap){
@@ -199,12 +208,12 @@ public class AppPanel extends JPanel {
         return mobList;
     }
     private boolean checkScrollY(){
-        return player.getY() < 32*3 && PlayerController.getDy() == -2
-                || player.getY() > height -32*4 && PlayerController.getDy() == 2;
+        return player.getY() < 32*10 && PlayerController.getDy() == -2
+                || player.getY() > height -32*9 && PlayerController.getDy() == 2;
     }
     private boolean checkScrollX(){
-        return player.getX() < 32*3 && PlayerController.getDx() == -2
-                || player.getX() > width -32*4 && PlayerController.getDx() == 2;
+        return player.getX() < 32*10 && PlayerController.getDx() == -2
+                || player.getX() > width -32*9 && PlayerController.getDx() == 2;
     }
     private void checkScroll(){
         mapScrollX = checkScrollX();
@@ -212,8 +221,11 @@ public class AppPanel extends JPanel {
     }
 
     private boolean shouldTileload(Tile tile){
-        return tile.getX()>-32&&tile.getX()<832
-        && tile.getY()>-32&&tile.getY()<832;
+        if(tile != null) {
+            return tile.getX() > -32 && tile.getX() < 832
+                    && tile.getY() > -32 && tile.getY() < 832;
+        }
+        return false;
     }
 
     void update() {
@@ -237,15 +249,19 @@ public class AppPanel extends JPanel {
         }
             repaint();
         if(mapScrollX || mapScrollY){
-            for(Tile tile: tileList) {
-                tile.setImageLoaded(shouldTileload(tile));
-                if (!shouldTileload(tile)) {
-                    tile.setVisible(false);
-                } else {
-                    if (tile.getImage() != null) {
-                        tile.setVisible(true);
-                    }else{
-                        tile.setImage(MapLoader.textureMap.get(tile.getTileId()));
+            for(Tile[] tileList: layerList) {
+                for (Tile tile : tileList) {
+                    if(tile !=null) {
+                        tile.setImageLoaded(shouldTileload(tile));
+                        if (!shouldTileload(tile)) {
+                            tile.setVisible(false);
+                        } else {
+                            if (tile.getImage() != null) {
+                                tile.setVisible(true);
+                            } else {
+                                tile.setImage(MapLoader.textureMap.get(tile.getTileId()));
+                            }
+                        }
                     }
                 }
             }

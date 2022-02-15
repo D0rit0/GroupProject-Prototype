@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class PlayerController implements Controller{
+public class PlayerController{
     protected int mouseX;
     protected int mouseY;
     private static int dx = 0;
@@ -87,8 +87,12 @@ public class PlayerController implements Controller{
         if(dy != 0 && dx !=0){
             if(!AppPanel.mapScrollX && AppPanel.mapScrollY) {
                 player.setX(dx/2);
-                for(Tile scenery: AppPanel.tileList){
-                    scenery.setY(-dy/2);
+                for(Tile[] tileList: AppPanel.layerList) {
+                    for (Tile scenery : tileList) {
+                        if(scenery != null) {
+                            scenery.setY(-dy / 2);
+                        }
+                    }
                 }
                 for(Mob mob: AppPanel.getMobList()){
                     if(!(mob instanceof PlayerCharacter)){
@@ -97,8 +101,12 @@ public class PlayerController implements Controller{
                 }
             }else if (!AppPanel.mapScrollY && AppPanel.mapScrollX){
                 player.setY(dy/2);
-                for(Tile scenery: AppPanel.tileList){
-                    scenery.setX(-dx/2);
+                for(Tile[] tileList: AppPanel.layerList) {
+                    for (Tile scenery : AppPanel.tileList) {
+                        if(scenery != null) {
+                            scenery.setX(-dx / 2);
+                        }
+                    }
                 }
                 for(Mob mob: AppPanel.getMobList()){
                     if(!(mob instanceof PlayerCharacter)){
@@ -106,9 +114,13 @@ public class PlayerController implements Controller{
                     }
                 }
             }else if(AppPanel.mapScrollX){
-                for(Tile scenery: AppPanel.tileList){
-                    scenery.setX(-dx/2);
-                    scenery.setY(-dy/2);
+                for(Tile[] tileList: AppPanel.layerList) {
+                    for (Tile scenery : tileList) {
+                        if(scenery != null) {
+                            scenery.setX(-dx / 2);
+                            scenery.setY(-dy / 2);
+                        }
+                    }
                 }
                 for(Mob mob: AppPanel.getMobList()){
                     if(!(mob instanceof PlayerCharacter)){
@@ -124,8 +136,12 @@ public class PlayerController implements Controller{
             if(!AppPanel.mapScrollX) {
                 player.setX(dx);
             }else {
-                for (Tile scenery : AppPanel.tileList) {
-                    scenery.setX(-dx);
+                for(Tile[] tileList: AppPanel.layerList) {
+                    for (Tile scenery : tileList) {
+                        if(scenery != null) {
+                            scenery.setX(-dx);
+                        }
+                    }
                 }
                 for(Mob mob: AppPanel.getMobList()){
                     if(!(mob instanceof PlayerCharacter)){
@@ -135,8 +151,12 @@ public class PlayerController implements Controller{
             }if(!AppPanel.mapScrollY) {
                 player.setY(dy);
             }else{
-                for(Tile scenery: AppPanel.tileList){
-                    scenery.setY(-dy);
+                for(Tile[] tileList: AppPanel.layerList) {
+                    for (Tile scenery : tileList) {
+                        if(scenery != null) {
+                            scenery.setY(-dy);
+                        }
+                    }
                 }
                 for(Mob mob: AppPanel.getMobList()){
                     if(!(mob instanceof PlayerCharacter)){
