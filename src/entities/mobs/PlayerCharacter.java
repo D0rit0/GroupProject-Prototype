@@ -10,7 +10,7 @@ public class PlayerCharacter extends Mob {
     //InputController playerController = new InputController();
 
     private PlayerCharacter(int x, int y){
-        super(x-32,y);
+        super(x,y);
         super.ssRow=12;
         super.ssCol=26;
         super.imagePath="src\\resources\\atlas_32x.png";

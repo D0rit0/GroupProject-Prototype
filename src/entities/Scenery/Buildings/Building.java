@@ -11,13 +11,28 @@ public abstract class Building extends Scenery {
     protected char color;
     protected int doorX,doorY;
     protected int buildingW, buildingH;
-    Building(int x, int y, char color, int doorOfSetX, int doorOfSetY, int buildingW, int buildingH){
+    Building(int x, int y, char color, int doorOfSetX, int doorOfSetY, int buildingW, int buildingH, int var){
         super(x,y);
         this.color=color;
         if(color == 'r'){
             ssCol =33;
-        }else{
+        }else if(color =='b'){
             ssCol =41;
+        }else if(color =='d'){
+            if(var == 1){
+                ssRow =1;
+                ssCol=12;
+            }else if(var == 2){
+                ssRow=7;
+                ssCol=5;
+            }else if(var == 3){
+                ssRow=10;
+                ssCol=4;
+
+            }else if(var == 4){
+                ssRow = 14;
+                ssCol = 4;
+            }
         }
         this.buildingW=buildingW;
         this.buildingH=buildingH;

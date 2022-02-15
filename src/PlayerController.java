@@ -1,6 +1,7 @@
 import entities.Scenery.Scenery;
 import entities.mobs.Mob;
 import entities.mobs.PlayerCharacter;
+import world.Tile;
 
 import javax.swing.event.MouseInputAdapter;
 import java.awt.event.KeyAdapter;
@@ -86,10 +87,8 @@ public class PlayerController implements Controller{
         if(dy != 0 && dx !=0){
             if(!AppPanel.mapScrollX && AppPanel.mapScrollY) {
                 player.setX(dx/2);
-                for(ArrayList<Scenery> list: AppPanel.gameMap){
-                    for(Scenery scenery: list){
-                        scenery.setY(-dy/2);
-                    }
+                for(Tile scenery: AppPanel.tileList){
+                    scenery.setY(-dy/2);
                 }
                 for(Mob mob: AppPanel.getMobList()){
                     if(!(mob instanceof PlayerCharacter)){
@@ -98,27 +97,23 @@ public class PlayerController implements Controller{
                 }
             }else if (!AppPanel.mapScrollY && AppPanel.mapScrollX){
                 player.setY(dy/2);
-                for(ArrayList<Scenery> list: AppPanel.gameMap){
-                    for(Scenery scenery: list){
-                        scenery.setX(-dx/2);
-                    }
+                for(Tile scenery: AppPanel.tileList){
+                    scenery.setX(-dx/2);
                 }
                 for(Mob mob: AppPanel.getMobList()){
                     if(!(mob instanceof PlayerCharacter)){
                         mob.setX(-dx/2);
                     }
                 }
-            }else if(AppPanel.mapScrollX && AppPanel.mapScrollY){
-                for(ArrayList<Scenery> list: AppPanel.gameMap){
-                    for(Scenery scenery: list){
-                        scenery.setX(-dx/2);
-                        scenery.setY(-dy/2);
-                    }
+            }else if(AppPanel.mapScrollX){
+                for(Tile scenery: AppPanel.tileList){
+                    scenery.setX(-dx/2);
+                    scenery.setY(-dy/2);
                 }
                 for(Mob mob: AppPanel.getMobList()){
                     if(!(mob instanceof PlayerCharacter)){
                         mob.setX(-dx/2);
-                        mob.setX(-dy/2);
+                        mob.setY(-dy/2);
                     }
                 }
             }else{
@@ -129,11 +124,10 @@ public class PlayerController implements Controller{
             if(!AppPanel.mapScrollX) {
                 player.setX(dx);
             }else {
-                for(ArrayList<Scenery> list: AppPanel.gameMap) {
-                    for (Scenery scenery : list) {
-                        scenery.setX(-dx);
-                    }
-                }for(Mob mob: AppPanel.getMobList()){
+                for (Tile scenery : AppPanel.tileList) {
+                    scenery.setX(-dx);
+                }
+                for(Mob mob: AppPanel.getMobList()){
                     if(!(mob instanceof PlayerCharacter)){
                         mob.setX(-dx);
                     }
@@ -141,10 +135,8 @@ public class PlayerController implements Controller{
             }if(!AppPanel.mapScrollY) {
                 player.setY(dy);
             }else{
-                for(ArrayList<Scenery> list: AppPanel.gameMap){
-                    for(Scenery scenery: list){
-                        scenery.setY(-dy);
-                    }
+                for(Tile scenery: AppPanel.tileList){
+                    scenery.setY(-dy);
                 }
                 for(Mob mob: AppPanel.getMobList()){
                     if(!(mob instanceof PlayerCharacter)){
