@@ -1,6 +1,4 @@
 import entities.Scenery.Buildings.*;
-import entities.Scenery.Ground;
-import entities.Scenery.Props.BigRock;
 import entities.Scenery.Props.Prop;
 import entities.Scenery.Scenery;
 import entities.Entity;
@@ -9,15 +7,20 @@ import entities.mobs.Mob;
 import entities.mobs.PeacefulAnimal;
 import entities.mobs.PlayerCharacter;
 
+import world.Tile;
+
+import imageRenderer.MapLoader;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class AppPanel extends JPanel {
+    private final String imagePath="src\\resources\\atlas_32x.png";
+
     private final int width = 800;
     private final int height = 800;
     private static final ArrayList<Mob> mobList = new ArrayList<>();
@@ -25,40 +28,42 @@ public class AppPanel extends JPanel {
     public static boolean mapScrollX = false;
     public static boolean mapScrollY = false;
 
+    //public static WorldMap worldMap;
     public static PlayerCharacter player;
     public static PlayerController playerController = new PlayerController();
-    public ArrayList<Tree> treeList = new ArrayList<>();
+
     public Map<Building, Point> buildingMap = new HashMap<>();
     public static ArrayList<ArrayList<Scenery>> gameMap = new ArrayList<>();
-    //Initializes a 2D arraylist that stores the map tiles and props.
-    //Randomly generated WILL CHANGE THIS TO STATIC MAP.
-    private void mapInit(){
-        buildingMap.put(new BuildingVar1(464,464,'b'),new Point(1000,1000));
-        for(int i = 0; i < 25; i++){
-            gameMap.add(new ArrayList<>());
-            if(i == 3 || i == 2){
-                for(int j = 0; j < 25; j++){
-                    gameMap.get(i).add(new Ground(i*32,j*32,1,(new Random()).nextInt(3)+6));
-                }
-            }else {
-                for (int j = 0; j < 25; j++) {
-                    gameMap.get(i).add(new Ground(i * 32, j * 32, (new Random()).nextInt(7)+1,
-                            (new Random()).nextInt(3)+1));
-                    if((new Random().nextInt(40)+1)==3){
-                        gameMap.get(i).add(new Tree(i*32,j*32, (new Random()).nextInt(3)+1));
-                    }if((new Random().nextInt(100)+1)==5){
-                        gameMap.get(i).add(new BigRock(i*32,j*32));
+    public static Tile[] tileList = new Tile[100*100];
+    public static Tile[][] layerList = new Tile[7][100*100];
+    //Loads the textures and creates the tile objects using the data given from our map loader class
+    private void mapInit() {
+        int[][] map;
+        for (int temp = 0; temp < 7; temp++) {
+            map = MapLoader.loadLayerArray(MapLoader.getLayer(temp+1));
+            MapLoader.LoadTextures(temp+1);
+            int i = 0;
+            for (int y = 0; y < map.length; y++) {
+                for (int x = 0; x < map[y].length; x++) {
+                    try {
+                        if(map[y][x]!=0) {
+                            layerList[temp][i] = new Tile(x * 32, y * 32, map[y][x]);
+                        }
+                        i++;
+                    } catch (OutOfMemoryError oome) {
+                        System.err.println("out of memory");
                     }
                 }
             }
         }
+        //dumps the map array to save some memory
+        System.out.println("it worked");
     }
-    Timer gameTimer;
     AppPanel(){
         //spawns all needed objects
-        mapInit();
         spawnPlayer();
-        spawnFloor();
+        mapInit();
+        //spawnFloor();
         this.setFocusable(true);
         this.setPreferredSize(new Dimension(800, 800));
         this.setBackground(Color.BLACK);
@@ -80,10 +85,12 @@ public class AppPanel extends JPanel {
         g2.drawString("x:" + player.getX() + " y: " + player.getY(),0,40);
         g2.drawLine((int)player.getCenter().getX(),(int)player.getCenter().getY(),playerController.mouseX,
                 playerController.mouseY);
-        for(ArrayList<Scenery> list: gameMap){
-            for(Scenery scenery: list) {
-                if(scenery instanceof Ground) {
-                    g2.drawImage(scenery.getImage(), scenery.getX(), scenery.getY(), this);
+        for(Tile[] tileList: layerList) {
+            for (Tile tile : tileList) {
+                if (tile != null) {
+                    if (tile.isImageLoaded() && shouldTileload(tile) && tile.isVisible()) {
+                        g2.drawImage(tile.getImage(), tile.getX(), tile.getY(), this);
+                    }
                 }
             }
         }
@@ -127,15 +134,7 @@ public class AppPanel extends JPanel {
         addKeyListener(playerController.MyKeyAdapter);
         System.out.print(""+player.getTop() + player.getBottom() + player.getLeft() + player.getRight());
     }
-    private void spawnFloor(){
-        for(int i = 0; i <= 12; i++){
-            if(i==6){
-                sceneryList.add(new Ground(32*i,sceneryList.get(4).getTop()-32,1,1));
-                System.out.println("x" +(32*i+32)+ "y"+(sceneryList.get(4).getTop()-32));
-            }
-            sceneryList.add(new Ground(32 * i, player.getBottom()+10, 1,1));
-        }
-    }
+
     public void checkCollide(Entity e) {
         Rectangle r1 = player.getBounds();
         Rectangle r2 = e.getBounds();
@@ -209,33 +208,63 @@ public class AppPanel extends JPanel {
         return mobList;
     }
     private boolean checkScrollY(){
-        return player.getY() < 32*3 && PlayerController.getDy() == -2
-                || player.getY() > height -32*4 && PlayerController.getDy() == 2;
+        return player.getY() < 32*10 && PlayerController.getDy() == -2
+                || player.getY() > height -32*9 && PlayerController.getDy() == 2;
     }
     private boolean checkScrollX(){
-        return player.getX() < 32*3 && PlayerController.getDx() == -2
-                || player.getX() > width -32*4 && PlayerController.getDx() == 2;
+        return player.getX() < 32*10 && PlayerController.getDx() == -2
+                || player.getX() > width -32*9 && PlayerController.getDx() == 2;
     }
     private void checkScroll(){
         mapScrollX = checkScrollX();
         mapScrollY = checkScrollY();
     }
 
-    void update(){
+    private boolean shouldTileload(Tile tile){
+        if(tile != null) {
+            return tile.getX() > -32 && tile.getX() < 832
+                    && tile.getY() > -32 && tile.getY() < 832;
+        }
+        return false;
+    }
+
+    void update() {
         checkScroll();
         playerController.move();
-        for(ArrayList<Scenery> list: gameMap){
-            for(Scenery scenery:list) {
+
+        for (ArrayList<Scenery> list : gameMap) {
+            for (Scenery scenery : list) {
                 if (scenery instanceof Tree || scenery instanceof Prop)
                     checkCollide(scenery);
             }
         }
-        if(player.getY() >height){
+        if (player.getY() > height) {
             player.setY(0);
-        }if(player.getX() >width){
+        }
+        if (player.getX() > width) {
             player.setX(0);
-        }if(player.getX() <0)
+        }
+        if (player.getX() < 0){
             player.setX(width - player.getWidth());
-        repaint();
+        }
+            repaint();
+        if(mapScrollX || mapScrollY){
+            for(Tile[] tileList: layerList) {
+                for (Tile tile : tileList) {
+                    if(tile !=null) {
+                        tile.setImageLoaded(shouldTileload(tile));
+                        if (!shouldTileload(tile)) {
+                            tile.setVisible(false);
+                        } else {
+                            if (tile.getImage() != null) {
+                                tile.setVisible(true);
+                            } else {
+                                tile.setImage(MapLoader.textureMap.get(tile.getTileId()));
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
