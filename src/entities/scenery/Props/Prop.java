@@ -1,6 +1,6 @@
-package entities.Scenery.Props;
+package entities.scenery.Props;
 
-import entities.Scenery.Scenery;
+import entities.scenery.Scenery;
 import imageRenderer.BufferedImageLoader;
 import imageRenderer.SpriteSheet;
 

@@ -1,8 +1,5 @@
-import entities.Scenery.Buildings.*;
-import entities.Scenery.Props.Prop;
-import entities.Scenery.Scenery;
+import entities.scenery.Scenery;
 import entities.Entity;
-import entities.Scenery.Tree;
 import entities.mobs.Mob;
 import entities.mobs.PeacefulAnimal;
 import entities.mobs.PlayerCharacter;
@@ -15,16 +12,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AppPanel extends JPanel {
     private final String imagePath="src\\resources\\atlas_32x.png";
 
-    private final int width = 800;
-    private final int height = 800;
-    private static final ArrayList<Mob> mobList = new ArrayList<>();
-    private final ArrayList<Scenery> sceneryList = new ArrayList<>();
+    private static final int width = 800;
+    private static final int height = 800;
+    private static final int delay = 1;
+
     public static boolean mapScrollX = false;
     public static boolean mapScrollY = false;
 
@@ -32,59 +27,70 @@ public class AppPanel extends JPanel {
     public static PlayerCharacter player;
     public static PlayerController playerController = new PlayerController();
 
-    public Map<Building, Point> buildingMap = new HashMap<>();
+    private static final ArrayList<Mob> mobList = new ArrayList<>();
     public static ArrayList<ArrayList<Scenery>> gameMap = new ArrayList<>();
-    public static Tile[] tileList = new Tile[100*100];
+
     public static Tile[][] layerList = new Tile[7][100*100];
     //Loads the textures and creates the tile objects using the data given from our map loader class
     private void mapInit() {
-        int[][] map;
+        int[][] mapData;
         for (int temp = 0; temp < 7; temp++) {
-            map = MapLoader.loadLayerArray(MapLoader.getLayer(temp+1));
-            MapLoader.LoadTextures(temp+1);
+            mapData = MapLoader.loadLayerArray(MapLoader.getLayer(temp+1));
+            MapLoader.LoadTextures(temp+1, mapData);
             int i = 0;
-            for (int y = 0; y < map.length; y++) {
-                for (int x = 0; x < map[y].length; x++) {
+            for (int y = 0; y < mapData.length; y++) {
+                for (int x = 0; x < mapData[y].length; x++) {
                     try {
-                        if(map[y][x]!=0) {
-                            layerList[temp][i] = new Tile(x * 32, y * 32, map[y][x]);
+                        if(mapData[y][x]!=0) {
+                            layerList[temp][i] = new Tile(x * 32, y * 32, mapData[y][x]);
                         }
                         i++;
-                    } catch (OutOfMemoryError oome) {
+                    } catch (OutOfMemoryError e) {
+                        e.printStackTrace();
                         System.err.println("out of memory");
                     }
                 }
             }
         }
-        //dumps the map array to save some memory
         System.out.println("it worked");
     }
     AppPanel(){
         //spawns all needed objects
         spawnPlayer();
         mapInit();
-        //spawnFloor();
+
         this.setFocusable(true);
         this.setPreferredSize(new Dimension(800, 800));
         this.setBackground(Color.BLACK);
+
         //Game Timer
         ActionListener timerTask = e -> update();
-        int delay = 1;
         Timer gameTimer = new Timer(delay, timerTask);
         gameTimer.start();
+    }
+    //initializes player,
+    //player is a singleton meaning no more than one instance of player can be created
+    private void spawnPlayer(){
+        player = PlayerCharacter.getInstance();
+        //adds mouseListener from mouseAdapter to the Jpanel
+        addMouseListener(playerController.MyMouseAdapter);
+        //adds the mouseMotionListener from the mouseAdapter
+        addMouseMotionListener(playerController.MyMouseAdapter);
+        //adds the keyListener from the keyAdapter
+        addKeyListener(playerController.MyKeyAdapter);
+        //Adds player to the list of mobs.
+        mobList.add(player);
+        mobList.add(new PeacefulAnimal(player.getX() +32, player.getY(), "Cat"));
     }
     //renders graphics
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        draw((Graphics2D) g);
+        //getting the information for what to render
+        render((Graphics2D) g);
     }
-    //tells graphics render what to render
-    private void draw(Graphics2D g2){
-        g2.setColor(Color.white);
-        g2.drawString("dx:" + PlayerController.getDx() + " dy: " + PlayerController.getDy(),0,20);
-        g2.drawString("x:" + player.getX() + " y: " + player.getY(),0,40);
-        g2.drawLine((int)player.getCenter().getX(),(int)player.getCenter().getY(),playerController.mouseX,
-                playerController.mouseY);
+    //tells graphics renderer what to render
+    private void render(Graphics2D g2){
+        //just checking each tile and seeing if it should be rendered
         for(Tile[] tileList: layerList) {
             for (Tile tile : tileList) {
                 if (tile != null) {
@@ -94,47 +100,13 @@ public class AppPanel extends JPanel {
                 }
             }
         }
-        for(ArrayList<Scenery> list: gameMap){
-            for(Scenery scenery: list) {
-                if(scenery instanceof Tree) {
-                    g2.drawImage(scenery.getImage(), scenery.getX(), scenery.getY(), this);
-                }
-            }
-        }
-        for(ArrayList<Scenery> list: gameMap){
-            for(Scenery scenery: list) {
-                if(scenery instanceof Prop) {
-                    g2.drawImage(scenery.getImage(), scenery.getX(), scenery.getY(), this);
-                }
-            }
-        }
-        for(Building building: buildingMap.keySet()){
-            g2.drawImage(building.getImage(),building.getX(),building.getY(), this);
-        }
+        //renders all mobs
         for(Mob entity: mobList){
             g2.drawImage(entity.getImage(), entity.getX(), entity.getY(), this);
         }
     }
-    //Method to return the playerController so that other classes can access it.
-    public static PlayerController getPlayerController(){
-        return playerController;
-    }
 
-    //initializes player,
-    //player is a singleton
-    private void spawnPlayer(){
-        player = PlayerCharacter.getInstance();
-        //adds mouseListener from mouseAdapter to the Jpanel
-        addMouseListener(playerController.MyMouseAdapter);
-        //adds the mouseMotionListener from the mouseAdapter
-        addMouseMotionListener(playerController.MyMouseAdapter);
-        //Adds player to the list of mobs.
-        mobList.add(player);
-        mobList.add(new PeacefulAnimal(player.getX() +32, player.getY(), "Cat"));
-        addKeyListener(playerController.MyKeyAdapter);
-        System.out.print(""+player.getTop() + player.getBottom() + player.getLeft() + player.getRight());
-    }
-
+    //checks collision between play and the given entity
     public void checkCollide(Entity e) {
         Rectangle r1 = player.getBounds();
         Rectangle r2 = e.getBounds();
@@ -207,6 +179,9 @@ public class AppPanel extends JPanel {
     public static ArrayList<Mob> getMobList(){
         return mobList;
     }
+    //checks to see if player is past the scroll threshold and which direction the player is moving
+    //the direction is used so that if the player goes to turn around the map doesn't continue to scroll
+    //if player is then returns true
     private boolean checkScrollY(){
         return player.getY() < 32*10 && PlayerController.getDy() == -2
                 || player.getY() > height -32*9 && PlayerController.getDy() == 2;
@@ -215,11 +190,12 @@ public class AppPanel extends JPanel {
         return player.getX() < 32*10 && PlayerController.getDx() == -2
                 || player.getX() > width -32*9 && PlayerController.getDx() == 2;
     }
+    //called every tick and determines which direction is scrolling
     private void checkScroll(){
         mapScrollX = checkScrollX();
         mapScrollY = checkScrollY();
     }
-
+    //checks to see if tile should be loaded based on if its within view of the panel
     private boolean shouldTileload(Tile tile){
         if(tile != null) {
             return tile.getX() > -32 && tile.getX() < 832
@@ -227,44 +203,33 @@ public class AppPanel extends JPanel {
         }
         return false;
     }
-
-    void update() {
-        checkScroll();
-        playerController.move();
-
-        for (ArrayList<Scenery> list : gameMap) {
-            for (Scenery scenery : list) {
-                if (scenery instanceof Tree || scenery instanceof Prop)
-                    checkCollide(scenery);
-            }
-        }
-        if (player.getY() > height) {
-            player.setY(0);
-        }
-        if (player.getX() > width) {
-            player.setX(0);
-        }
-        if (player.getX() < 0){
-            player.setX(width - player.getWidth());
-        }
-            repaint();
-        if(mapScrollX || mapScrollY){
-            for(Tile[] tileList: layerList) {
-                for (Tile tile : tileList) {
-                    if(tile !=null) {
-                        tile.setImageLoaded(shouldTileload(tile));
-                        if (!shouldTileload(tile)) {
-                            tile.setVisible(false);
+    //manages which tiles should be rendered and if a texture has been loaded onto a tile.
+    private void manageTiles(){
+        for(Tile[] tileList: layerList) {
+            for (Tile tile : tileList) {
+                if(tile !=null) {
+                    tile.setImageLoaded(shouldTileload(tile));
+                    if (!shouldTileload(tile)) {
+                        tile.setVisible(false);
+                    } else {
+                        if (tile.getImage() != null) {
+                            tile.setVisible(true);
                         } else {
-                            if (tile.getImage() != null) {
-                                tile.setVisible(true);
-                            } else {
-                                tile.setImage(MapLoader.textureMap.get(tile.getTileId()));
-                            }
+                            tile.setImage(MapLoader.textureMap.get(tile.getTileId()));
                         }
                     }
                 }
             }
+        }
+    }
+
+    //update method called by the game timer
+    private void update() {
+        checkScroll();
+        playerController.move();
+            repaint();
+        if(mapScrollX || mapScrollY){
+            manageTiles();
         }
     }
 }

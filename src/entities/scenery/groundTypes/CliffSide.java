@@ -1,4 +1,4 @@
-package entities.Scenery.groundTypes;
+package entities.scenery.groundTypes;
 
 public class CliffSide extends Ground{
 

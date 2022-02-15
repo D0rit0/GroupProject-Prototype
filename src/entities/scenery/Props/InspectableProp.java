@@ -1,6 +1,4 @@
-package entities.Scenery.Props;
-
-import entities.Scenery.Props.Prop;
+package entities.scenery.Props;
 
 public class InspectableProp extends Prop {
     protected boolean isInspectable;

@@ -1,4 +1,3 @@
-import entities.Scenery.Scenery;
 import entities.mobs.Mob;
 import entities.mobs.PlayerCharacter;
 import world.Tile;
@@ -7,7 +6,6 @@ import javax.swing.event.MouseInputAdapter;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 public class PlayerController{
     protected int mouseX;
@@ -102,7 +100,7 @@ public class PlayerController{
             }else if (!AppPanel.mapScrollY && AppPanel.mapScrollX){
                 player.setY(dy/2);
                 for(Tile[] tileList: AppPanel.layerList) {
-                    for (Tile scenery : AppPanel.tileList) {
+                    for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setX(-dx / 2);
                         }

@@ -1,4 +1,4 @@
-package entities.Scenery;
+package entities.scenery;
 
 import entities.Entity;
 

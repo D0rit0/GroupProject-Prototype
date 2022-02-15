@@ -1,4 +1,4 @@
-package entities.Scenery.groundTypes;
+package entities.scenery.groundTypes;
 
 public class Grass extends Ground{
     public Grass(int x, int y) {

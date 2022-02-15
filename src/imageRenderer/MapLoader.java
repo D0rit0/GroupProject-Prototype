@@ -93,9 +93,9 @@ public class MapLoader {
         System.out.println(Arrays.deepToString(dataArr));
         return dataArr;
     }
-    public static void LoadTextures(int layer){
-        //loads in textures for layer 1
-        for(int[] array: loadLayerArray(getLayer(layer))){
+    public static void LoadTextures(int layer, int[][] dataArr){
+        //loads in textures for specified layer
+        for(int[] array: dataArr){
             for(int textureId: array){
                 if(!textureMap.containsKey(textureId)&& textureId!=0) {
                     textureMap.put(textureId,SpriteLoader.loadImage("src\\resources\\atlas_32x.png", textureId));

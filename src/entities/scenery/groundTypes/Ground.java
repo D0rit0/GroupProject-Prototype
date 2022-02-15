@@ -1,6 +1,6 @@
-package entities.Scenery.groundTypes;
+package entities.scenery.groundTypes;
 
-import entities.Scenery.Scenery;
+import entities.scenery.Scenery;
 
 public abstract class Ground extends Scenery {
     private int tileID;

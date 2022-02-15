@@ -1,4 +1,4 @@
-package entities.Scenery.groundTypes;
+package entities.scenery.groundTypes;
 
 public class DarkGrass extends Ground{
     public DarkGrass(int x, int y, String var) {
