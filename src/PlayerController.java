@@ -1,6 +1,8 @@
 import entities.mobs.Mob;
 import entities.mobs.PlayerCharacter;
+
 import world.Tile;
+import world.Map;
 
 import javax.swing.event.MouseInputAdapter;
 import java.awt.event.KeyAdapter;
@@ -85,7 +87,7 @@ public class PlayerController{
         if(dy != 0 && dx !=0){
             if(!AppPanel.mapScrollX && AppPanel.mapScrollY) {
                 player.setX(dx/2);
-                for(Tile[] tileList: AppPanel.layerList) {
+                for(Tile[] tileList: Map.getLayerList()) {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setY(-dy / 2);
@@ -99,7 +101,7 @@ public class PlayerController{
                 }
             }else if (!AppPanel.mapScrollY && AppPanel.mapScrollX){
                 player.setY(dy/2);
-                for(Tile[] tileList: AppPanel.layerList) {
+                for(Tile[] tileList: Map.getLayerList()) {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setX(-dx / 2);
@@ -112,7 +114,7 @@ public class PlayerController{
                     }
                 }
             }else if(AppPanel.mapScrollX){
-                for(Tile[] tileList: AppPanel.layerList) {
+                for(Tile[] tileList: Map.getLayerList()) {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setX(-dx / 2);
@@ -134,7 +136,7 @@ public class PlayerController{
             if(!AppPanel.mapScrollX) {
                 player.setX(dx);
             }else {
-                for(Tile[] tileList: AppPanel.layerList) {
+                for(Tile[] tileList: Map.getLayerList()) {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setX(-dx);
@@ -149,7 +151,7 @@ public class PlayerController{
             }if(!AppPanel.mapScrollY) {
                 player.setY(dy);
             }else{
-                for(Tile[] tileList: AppPanel.layerList) {
+                for(Tile[] tileList: Map.getLayerList()) {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setY(-dy);
