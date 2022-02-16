@@ -1,3 +1,7 @@
+package main;
+
+import main.AppPanel;
+
 import javax.swing.*;
 
 public class AppFrame extends JFrame {

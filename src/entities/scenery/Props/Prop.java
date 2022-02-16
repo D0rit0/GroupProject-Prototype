@@ -1,8 +1,8 @@
 package entities.scenery.Props;
 
 import entities.scenery.Scenery;
-import imageRenderer.BufferedImageLoader;
-import imageRenderer.SpriteSheet;
+import util.imageRenderer.BufferedImageLoader;
+import util.imageRenderer.SpriteSheet;
 
 import java.io.IOException;
 

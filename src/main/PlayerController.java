@@ -1,3 +1,5 @@
+package main;
+
 import entities.mobs.Mob;
 import entities.mobs.PlayerCharacter;
 
@@ -50,7 +52,6 @@ public class PlayerController{
                     dx = 2;
                     player.changeImage(player.getSsCol(), player.setSsRow(14));
                     player.moving = true;
-                    System.out.println("d");
                 }
                 if(key == KeyEvent.VK_W) {
                     player.changeImage(player.getSsCol(), player.setSsRow(15));
@@ -61,7 +62,6 @@ public class PlayerController{
                     player.changeImage(player.getSsCol(), player.setSsRow(12));
                     dy = 2;
                     player.moving = true;
-                    System.out.println("s");
                 }
                 player.animationTimer.start();
 
