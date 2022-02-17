@@ -1,7 +1,7 @@
 package entities;
 
-import imageRenderer.BufferedImageLoader;
-import imageRenderer.SpriteSheet;
+import util.imageRenderer.BufferedImageLoader;
+import util.imageRenderer.SpriteSheet;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

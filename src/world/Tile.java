@@ -1,9 +1,8 @@
 package world;
 
-import imageRenderer.MapLoader;
-
 import java.awt.*;
-import java.awt.image.BufferedImage;
+
+import static util.imageRenderer.GraphicsHandler.textureMap;
 
 
 public class Tile {
@@ -12,8 +11,6 @@ public class Tile {
     protected int y;
     protected int width = 32;
     protected int height = 32;
-    protected BufferedImage spriteSheet=null;
-    protected int ssCol= 1, ssRow=1;
     protected boolean collideable;
     protected boolean isVisible = false;
     public Image image;
@@ -25,7 +22,7 @@ public class Tile {
         this.y=y;
         if(x < 832 && -32 < x
         && y < 832 && -32 < y){
-            image= MapLoader.textureMap.get(tileId);
+            image = textureMap.get(tileId);
             imageLoaded=true;
             isVisible=true;
         }
@@ -53,12 +50,14 @@ public class Tile {
     public int getTileId(){
         return tileId;
     }
-    public int getSsCol(){
-        return ssCol;
+    public boolean isCollideable(){
+        return collideable;
     }
-    public int getSsRow(){
-        return ssRow;
+    public void setIsCollideable(boolean collideable){
+        this.collideable = collideable;
     }
+
+
     public Rectangle getBounds(){
         return new Rectangle(x,y,width,height);
     }

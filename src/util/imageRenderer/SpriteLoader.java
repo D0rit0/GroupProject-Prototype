@@ -1,6 +1,4 @@
-package imageRenderer;
-
-import world.Tile;
+package util.imageRenderer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

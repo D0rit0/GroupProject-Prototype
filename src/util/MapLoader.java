@@ -1,4 +1,4 @@
-package imageRenderer;
+package util;
 //Thanks to https://mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
 //I can now process xml files
 import org.w3c.dom.Document;
@@ -11,18 +11,14 @@ import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 
 public class MapLoader {
-    private static final String fileLocation = "src\\Team Valentine World Map.tmx";
-    public static Map<Integer, Image> textureMap = new HashMap<>();
+    private static final String fileLocation = "src\\world\\Team Valentine World Map.tmx";
 
     private static Document documentLoader() {
         //create a document builder factory
@@ -76,31 +72,24 @@ public class MapLoader {
     }
     public static int[][] loadLayerArray(String dataString){
         assert dataString != null;
+
         //removes all new line characters and splits the string at each comma and creates a string array out of it.
         String[] string = dataString.replaceAll("\n","").split(",");
         int[] dataArrTemp = new int[string.length];
-        int y = 0;
+
         //takes that string array and parses it into an int array
         for(int i=0; i< string.length;i++){
             dataArrTemp[i] = Integer.parseInt(string[i]);
         }
+
         //takes our new int array and turns it into a 2d int array
         int[][] dataArr = new int[100][100];
+
         //found better method from https://stackoverflow.com/questions/5134555/how-to-convert-a-1d-array-to-2d-array
         for(int i = 0; i < 100; i++){
             System.arraycopy(dataArrTemp, (i*100), dataArr[i], 0,100);
         }
         System.out.println(Arrays.deepToString(dataArr));
         return dataArr;
-    }
-    public static void LoadTextures(int layer, int[][] dataArr){
-        //loads in textures for specified layer
-        for(int[] array: dataArr){
-            for(int textureId: array){
-                if(!textureMap.containsKey(textureId)&& textureId!=0) {
-                    textureMap.put(textureId,SpriteLoader.loadImage("src\\resources\\atlas_32x.png", textureId));
-                }
-            }
-        }
     }
 }
