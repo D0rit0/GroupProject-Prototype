@@ -1,89 +1,37 @@
 package util;
 
-import entities.mobs.Mob;
-import entities.mobs.PlayerCharacter;
-
-import main.AppPanel;
-import main.PlayerController;
-import world.Map;
 import world.Tile;
 
-import java.awt.*;
-
+import static java.lang.Math.abs;
 import static main.AppPanel.*;
 
 public class CollisionHandler {
 
-    private static final Tile[][] layerList = Map.getLayerList();
+    //Used this method to get a more accurate collision detection than what I came up with in the dungeon crawlers game
+    //https://stackoverflow.com/search?q=user:11141508+collision-detection&s=4a7167c9-0b83-453a-ac02-e0e7db5e8b24
+    //tweaked it a bit to better fit my code.
+    public static void checkCollide(Tile tile){
+        int w = 24;
+        int h = 24;
+        int dx = tile.getX() - player.getX();
+        int dy = tile.getY() - player.getY();
 
-    //checks collision between play and the given entity
-    public static void checkCollide(Tile tile) {
-        Rectangle r1 = player.getBounds();
-        Rectangle r2 = tile.getBounds();
-        if (r2.intersects(r1) && PlayerController.getDx() == 2) {
-            playerController.setDx(0);
-            if (mapScrollX) {
-                for (Tile[] list : layerList) {
-                    for(Tile t: list) {
-                        t.setX(2);
-                    }
-                }
-                for (Mob mob : AppPanel.getMobList()) {
-                    if (!(mob instanceof PlayerCharacter)) {
-                        mob.setX(-2);
-                    }
-                }
-            }else {
-                player.setRight(player.getX() + player.getWidth() - 2);
-            }
-        } else if (r1.intersects(r2) && PlayerController.getDx() == -2) {
-            playerController.setDx(0);
-            if(mapScrollX) {
-                for (Tile[] list : layerList) {
-                    for(Tile t: list) {
-                        t.setX(-2);
-                    }
-                }
-                for (Mob mob : AppPanel.getMobList()) {
-                    if (!(mob instanceof PlayerCharacter)) {
-                        mob.setX(-2);
-                    }
-                }
-            }else {
-                player.setLeft(player.getX() + 2);
-            }
-        }if (r1.intersects(r2) && PlayerController.getDy() == -2) {
-            playerController.setDy(0);
-            if(mapScrollY) {
-                for (Tile[] list : layerList) {
-                    for(Tile t: list) {
-                        t.setY(-2);
-                    }
-                }
-                for (Mob mob : AppPanel.getMobList()) {
-                    if (!(mob instanceof PlayerCharacter)) {
-                        mob.setY(-2);
-                    }
-                }
-            }else {
-                player.setTop(player.getY() + 2);
-            }
-        } if (r1.intersects(r2) && PlayerController.getDy() == 2) {
-            playerController.setDy(0);
-            if(mapScrollY) {
-                for (Tile[] list : layerList) {
-                    for(Tile t: list) {
-                        t.setY(2);
-                    }
-                }
-                for (Mob mob : AppPanel.getMobList()) {
-                    if (!(mob instanceof PlayerCharacter)) {
-                        mob.setY(2);
-                    }
-                }
-            }else {
-                player.setBottom(player.getY() + player.getHeight() - 2);
-            }
+        if (abs(dx) < w && abs(dy) < h)//collision
+        {
+            int wy = w * dy;
+            int hx = h * dx;
+            if (wy >= hx)
+                if (wy >= -hx)//top of block
+                    player.setTop(tile.getY()-17);//align edges
+                else//right of block
+                    player.setLeft(tile.getX()+32);
+            else
+                if (wy >= -hx)//left of block
+                    player.setLeft(tile.getX()-17);
+                //player.x = re.x - player.width;//align edges
+                else//bottom of block
+                    player.setTop(tile.getY()+32);
+                //player.y = re.y + re.height;//align edges
         }
     }
 }

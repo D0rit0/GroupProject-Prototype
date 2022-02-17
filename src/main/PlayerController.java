@@ -167,10 +167,10 @@ public class PlayerController{
         }
     }
 
-    public void setDx(int newDx) {
+    public static void setDx(int newDx) {
         dx=newDx;
     }
-    public void setDy(int newDy) {
+    public static void setDy(int newDy) {
         dx=newDy;
     }
 }

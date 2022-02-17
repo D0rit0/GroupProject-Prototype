@@ -4,9 +4,12 @@ import entities.mobs.Mob;
 import entities.mobs.PeacefulAnimal;
 import entities.mobs.PlayerCharacter;
 
+import util.CollisionHandler;
+import util.TileHandler;
 import util.imageRenderer.GraphicsHandler;
 
 import world.Map;
+import world.Tile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,19 +42,24 @@ public class AppPanel extends JPanel {
     public final int dialogue = 3;
 
     AppPanel(){
-        //spawns all needed objects
-        spawnPlayer();
-        Map.init();
-
         this.setFocusable(true);
         this.setPreferredSize(new Dimension(width, height));
         this.setBackground(Color.BLACK);
+
+        run();
+    }
+
+    private void run(){
+        //spawns all needed objects
+        spawnPlayer();
+        Map.init();
 
         //Game Timer
         ActionListener timerTask = e -> update();
         Timer gameTimer = new Timer(delay, timerTask);
         gameTimer.start();
     }
+
     //initializes player,
     //player is a singleton meaning no more than one instance of player can be created
     private void spawnPlayer(){
@@ -112,8 +120,13 @@ public class AppPanel extends JPanel {
 
     //update method called by the game timer
     private void update() {
-        checkScroll();
         playerController.move();
+        for(Tile tile: Map.getCollideableList()){
+            if(TileHandler.shouldTileLoad(tile)){
+                CollisionHandler.checkCollide(tile);
+            }
+        }
+        checkScroll();
             repaint();
         if(mapScrollX || mapScrollY){
             manageTiles();

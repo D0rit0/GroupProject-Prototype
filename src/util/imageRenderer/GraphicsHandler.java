@@ -1,6 +1,8 @@
 package util.imageRenderer;
 
 import entities.mobs.Mob;
+import entities.mobs.PlayerCharacter;
+import main.PlayerController;
 import world.Map;
 import world.Tile;
 
@@ -43,7 +45,10 @@ public class GraphicsHandler {
     //renders all mobs
     public static void renderMobs(Graphics2D g2){
         for(Mob entity: mobList){
-            g2.drawImage(entity.getImage(), entity.getX(), entity.getY(), imageObserver);
+            if(entity instanceof PlayerCharacter){
+                g2.drawImage(entity.getImage(),entity.getX(),entity.getY(),imageObserver);
+            }else
+                g2.drawImage(entity.getImage(), entity.getX(), entity.getY(), imageObserver);
         }
     }
 }

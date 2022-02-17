@@ -18,7 +18,7 @@ import java.util.Objects;
 
 
 public class MapLoader {
-    private static final String fileLocation = "src\\Team Valentine World Map.tmx";
+    private static final String fileLocation = "src\\world\\Team Valentine World Map.tmx";
 
     private static Document documentLoader() {
         //create a document builder factory

@@ -1,13 +1,15 @@
 package main;
 
 import main.AppPanel;
+import util.imageRenderer.SpriteLoader;
 
 import javax.swing.*;
 
 public class AppFrame extends JFrame {
     AppFrame(){
         this.add(new AppPanel());
-        this.setTitle("MouseTest");
+        this.setTitle("ExplorationRPG");
+        this.setIconImage(SpriteLoader.loadImage("src\\resources\\atlas_32x.png",1082));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);

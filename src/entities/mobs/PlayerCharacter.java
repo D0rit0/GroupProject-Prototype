@@ -32,6 +32,18 @@ public class PlayerCharacter extends Mob {
     public String getPlayerName(){
         return playerName;
     }
+    public void setLeft(int newLeft){
+        x = newLeft-8;
+    }
+    public void setRight(int newRight){
+        x = newRight - width;
+    }
+    public void setTop(int newTop){
+        y = newTop-8;
+    }
+    public void setBottom(int newBottom){
+        y= newBottom-height;
+    }
 
     @Override
     public Rectangle getBounds() {

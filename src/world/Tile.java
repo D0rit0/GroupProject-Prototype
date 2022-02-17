@@ -50,6 +50,12 @@ public class Tile {
     public int getTileId(){
         return tileId;
     }
+    public boolean isCollideable(){
+        return collideable;
+    }
+    public void setIsCollideable(boolean collideable){
+        this.collideable = collideable;
+    }
 
 
     public Rectangle getBounds(){
