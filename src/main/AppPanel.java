@@ -36,10 +36,10 @@ public class AppPanel extends JPanel {
 
     //Stole game state idea from https://www.youtube.com/watch?v=_SJU99LU1IQ
     public static int gameState;
-    public final int titleScreen = 0;
-    public final int running = 1;
-    public final int paused = 2;
-    public final int dialogue = 3;
+    public static final int titleScreen = 0;
+    public static final int running = 1;
+    public static final int paused = 2;
+    public static final int dialogue = 3;
 
     AppPanel(){
         this.setFocusable(true);
@@ -57,6 +57,7 @@ public class AppPanel extends JPanel {
         //Game Timer
         ActionListener timerTask = e -> update();
         Timer gameTimer = new Timer(delay, timerTask);
+        gameState = running;
         gameTimer.start();
     }
 
@@ -84,17 +85,8 @@ public class AppPanel extends JPanel {
         super.paintComponent(g);
 
         //getting the information for what to render
-        render((Graphics2D) g);
+        GraphicsHandler.render((Graphics2D) g);
     }
-
-    //tells graphics renderer what to render
-    private void render(Graphics2D g2){
-
-        GraphicsHandler.renderTiles(g2);
-
-        GraphicsHandler.renderMobs(g2);
-    }
-
 
     public static ArrayList<Mob> getMobList(){
         return mobList;

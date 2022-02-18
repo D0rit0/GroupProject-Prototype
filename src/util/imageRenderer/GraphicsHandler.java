@@ -2,7 +2,7 @@ package util.imageRenderer;
 
 import entities.mobs.Mob;
 import entities.mobs.PlayerCharacter;
-import main.PlayerController;
+
 import world.Map;
 import world.Tile;
 
@@ -10,12 +10,22 @@ import java.awt.*;
 import java.awt.image.ImageObserver;
 import java.util.HashMap;
 
-import static main.AppPanel.mobList;
+import static main.AppPanel.*;
 
 public class GraphicsHandler {
     public static java.util.Map<Integer, Image> textureMap = new HashMap<>();
 
     private static final ImageObserver imageObserver = (img, infoflags, x, y, width, height) -> false;
+
+    public static void render(Graphics2D g2){
+        renderTiles(g2);
+        renderMobs(g2);
+
+        if(gameState==dialogue){
+            player.currentDialogue.renderDialogueBox(g2);
+        }
+
+    }
 
     //Loads in textures into a map assigning the texture Id as the key
     public static void LoadTextures(int layer, int[][] dataArr){

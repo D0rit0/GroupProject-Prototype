@@ -1,5 +1,7 @@
 package entities.mobs;
 
+import main.DialogueBox;
+
 import java.awt.*;
 
 public class PlayerCharacter extends Mob {
@@ -7,7 +9,7 @@ public class PlayerCharacter extends Mob {
     // using a private constructor allowing for only one instance to be created
     private String playerName;
     private static PlayerCharacter instance;
-    //InputController playerController = new InputController();
+    public DialogueBox currentDialogue;
 
     private PlayerCharacter(int x, int y){
         super(x,y);

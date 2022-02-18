@@ -11,6 +11,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+import static main.AppPanel.gameState;
+import static main.AppPanel.dialogue;
+import static main.AppPanel.running;
+import static main.AppPanel.paused;
+
 public class PlayerController{
     protected int mouseX;
     protected int mouseY;
@@ -43,29 +48,34 @@ public class PlayerController{
         @Override
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
-                if(key == KeyEvent.VK_A){
+            if(gameState == running) {
+                if (key == KeyEvent.VK_A) {
                     dx = -2;
                     player.changeImage(player.getSsCol(), player.setSsRow(13));
                     player.moving = true;
-                }
-                else if(key == KeyEvent.VK_D){
+                } else if (key == KeyEvent.VK_D) {
                     dx = 2;
                     player.changeImage(player.getSsCol(), player.setSsRow(14));
                     player.moving = true;
                 }
-                if(key == KeyEvent.VK_W) {
+                if (key == KeyEvent.VK_W) {
                     player.changeImage(player.getSsCol(), player.setSsRow(15));
                     dy = -2;
                     player.moving = true;
-                }
-                else if(key == KeyEvent.VK_S) {
+                } else if (key == KeyEvent.VK_S) {
                     player.changeImage(player.getSsCol(), player.setSsRow(12));
                     dy = 2;
                     player.moving = true;
                 }
                 player.animationTimer.start();
-
+            }else if(gameState == dialogue){
+                if(player.currentDialogue.hasNext()) {
+                    player.currentDialogue.nextText();
+                }else{
+                    player.currentDialogue.close();
+                }
             }
+        }
 
         @Override
         public void keyReleased(KeyEvent e) {
@@ -78,8 +88,10 @@ public class PlayerController{
                     dy = 0; player.moving = false;
                 }
             }
-            player.animationTimer.stop();
-            player.changeImage(26, player.getSsRow());
+            if(dx == 0 && dy == 0) {
+                player.animationTimer.stop();
+                player.changeImage(26, player.getSsRow());
+            }
         }
     };
     public void move(){
