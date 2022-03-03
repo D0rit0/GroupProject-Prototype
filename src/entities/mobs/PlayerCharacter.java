@@ -19,6 +19,10 @@ public class PlayerCharacter extends Mob {
         walkState1=25;
         walkState2=27;
         restState=26;
+        leftFace=13;
+        rightFace=14;
+        centerFace=12;
+        rearFace=15;
         //String imagePath = "src\\resources\\Male\\Male 01-1.png";
         loadImage(imagePath);
         grounded = false;
@@ -33,18 +37,6 @@ public class PlayerCharacter extends Mob {
     }
     public String getPlayerName(){
         return playerName;
-    }
-    public void setLeft(int newLeft){
-        x = newLeft-8;
-    }
-    public void setRight(int newRight){
-        x = newRight - width;
-    }
-    public void setTop(int newTop){
-        y = newTop-8;
-    }
-    public void setBottom(int newBottom){
-        y= newBottom-height;
     }
 
     @Override

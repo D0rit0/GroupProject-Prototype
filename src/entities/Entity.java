@@ -16,6 +16,7 @@ public abstract class Entity {
     protected int ssCol= 1, ssRow=1;
     protected boolean collideable;
     protected boolean isVisible;
+    protected boolean interactable = false;
     protected String imagePath = "src\\resources\\atlas_32x.png";
     protected Image image;
 
@@ -53,6 +54,10 @@ public abstract class Entity {
 
     public Image getImage(){
         return image;
+    }
+
+    public boolean isInteractable(){
+        return interactable;
     }
 
     public Rectangle getBounds(){

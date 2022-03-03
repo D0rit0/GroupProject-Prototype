@@ -1,6 +1,10 @@
 package util;
 
+import entities.Entity;
+import entities.mobs.Npc;
 import world.Tile;
+
+import java.awt.*;
 
 import static java.lang.Math.abs;
 import static main.AppPanel.*;
@@ -28,10 +32,21 @@ public class CollisionHandler {
             else
                 if (wy >= -hx)//left of block
                     player.setLeft(tile.getX()-17);
-                //player.x = re.x - player.width;//align edges
+
                 else//bottom of block
                     player.setTop(tile.getY()+32);
-                //player.y = re.y + re.height;//align edges
+
+        }
+    }
+    public static void entityCollide(){
+        for(Entity e: getMobList()) {
+            Rectangle r1 = e.getBounds();
+            Rectangle r2 = player.getBounds();
+            if (r1.intersects(r2) && e.isInteractable()) {
+                if (e instanceof Npc) {
+                    ((Npc) e).interact();
+                }
+            }
         }
     }
 }

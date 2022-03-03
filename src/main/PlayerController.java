@@ -3,10 +3,12 @@ package main;
 import entities.mobs.Mob;
 import entities.mobs.PlayerCharacter;
 
+import util.CollisionHandler;
 import world.Tile;
 import world.Map;
 
 import javax.swing.event.MouseInputAdapter;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -16,7 +18,7 @@ import static main.AppPanel.dialogue;
 import static main.AppPanel.running;
 import static main.AppPanel.paused;
 
-public class PlayerController{
+public class PlayerController {
     protected int mouseX;
     protected int mouseY;
     private static int dx = 0;
@@ -48,31 +50,41 @@ public class PlayerController{
         @Override
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
+            //controls for when in regular gameplay
             if(gameState == running) {
-                if (key == KeyEvent.VK_A) {
-                    dx = -2;
-                    player.changeImage(player.getSsCol(), player.setSsRow(13));
-                    player.moving = true;
-                } else if (key == KeyEvent.VK_D) {
-                    dx = 2;
-                    player.changeImage(player.getSsCol(), player.setSsRow(14));
-                    player.moving = true;
+                if(key != KeyEvent.VK_E) {
+                    if (key == KeyEvent.VK_A) {
+                        dx = -2;
+                        player.changeImage(player.getSsCol(), player.setSsRow(player.getLeftFace()));
+                        player.moving = true;
+                    } else if (key == KeyEvent.VK_D) {
+                        dx = 2;
+                        player.changeImage(player.getSsCol(), player.setSsRow(player.getRightFace()));
+                        player.moving = true;
+                    }
+                    if (key == KeyEvent.VK_W) {
+                        player.changeImage(player.getSsCol(), player.setSsRow(player.getRearFace()));
+                        dy = -2;
+                        player.moving = true;
+                    } else if (key == KeyEvent.VK_S) {
+                        player.changeImage(player.getSsCol(), player.setSsRow(player.getCenterFace()));
+                        dy = 2;
+                        player.moving = true;
+                    }
+                    player.animationTimer.start();
+                }else {
+                    CollisionHandler.entityCollide();
                 }
-                if (key == KeyEvent.VK_W) {
-                    player.changeImage(player.getSsCol(), player.setSsRow(15));
-                    dy = -2;
-                    player.moving = true;
-                } else if (key == KeyEvent.VK_S) {
-                    player.changeImage(player.getSsCol(), player.setSsRow(12));
-                    dy = 2;
-                    player.moving = true;
-                }
-                player.animationTimer.start();
-            }else if(gameState == dialogue){
-                if(player.currentDialogue.hasNext()) {
-                    player.currentDialogue.nextText();
-                }else{
-                    player.currentDialogue.close();
+            }
+            //Controls for when in dialogue
+            else if(gameState == dialogue){
+                if(key == KeyEvent.VK_SPACE) {
+                    if (player.currentDialogue.hasNext()) {
+                        player.currentDialogue.nextText();
+                    } else {
+                        player.currentDialogue.nextText();
+                        player.currentDialogue.close();
+                    }
                 }
             }
         }
@@ -90,7 +102,7 @@ public class PlayerController{
             }
             if(dx == 0 && dy == 0) {
                 player.animationTimer.stop();
-                player.changeImage(26, player.getSsRow());
+                player.changeImage(player.getRestState(), player.getSsRow());
             }
         }
     };
