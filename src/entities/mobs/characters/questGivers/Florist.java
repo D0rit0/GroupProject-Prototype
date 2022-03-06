@@ -3,7 +3,11 @@ package entities.mobs.characters.questGivers;
 import main.DialogueBox;
 
 public class Florist extends QuestGiver{
-    public Florist(int x, int y, String name, DialogueBox dialogue) {
-        super(x, y, name, dialogue);
+    public Florist(int x, int y, String name) {
+
+        super(x, y, "Florist", new DialogueBox(200, 200, new String[] {"Hello"} , "Florist"));
+        loadImage("src\\resources\\Female\\Female 19-1.png");
+
     }
+    public void talk(){ }
 }
