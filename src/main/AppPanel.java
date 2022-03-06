@@ -4,7 +4,9 @@ import entities.mobs.Mob;
 import entities.mobs.PeacefulAnimal;
 import entities.mobs.PlayerCharacter;
 
+import entities.mobs.characters.questGivers.Chocolatier;
 import entities.mobs.characters.questGivers.Florist;
+import entities.mobs.characters.questGivers.Merchant;
 import util.CollisionHandler;
 import util.TileHandler;
 import util.imageRenderer.GraphicsHandler;
@@ -79,7 +81,9 @@ public class AppPanel extends JPanel {
         //Adds player to the list of mobs.
         mobList.add(player);
         mobList.add(new PeacefulAnimal(player.getX() +32, player.getY(), "Cat"));
-        mobList.add(new Florist(player.getX() + 64, player.getY(), "Florist"));
+        mobList.add(new Florist(player.getX() + 64, player.getY() - 32, "Florist"));
+        mobList.add(new Chocolatier(player.getX() + 32, player.getY() + 32, "Chocolatier"));
+        mobList.add(new Merchant(player.getX() - 32, player.getY(), "Merchant"));
     }
 
     //renders graphics
