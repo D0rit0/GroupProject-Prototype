@@ -7,7 +7,7 @@ public class Merchant extends QuestGiver{
 
         super(x, y, "Merchant");
 
-        dialogue = new DialogueBox(new String[] {"I have many wares for sale"}, this);
+        dialogue = new DialogueBox(new String[] {"I have many wares for sale."}, this);
 
         loadImage("src\\resources\\Male\\Male 12-1.png");
     }
