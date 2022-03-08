@@ -97,8 +97,9 @@ public abstract class Entity {
         ssRow=newRow;
         return newRow;
     }
-    public void setSsCol(int newCol){
+    public int setSsCol(int newCol){
         ssCol=newCol;
+        return newCol;
     }
     public Point getCenter(){
         return new Point((int)(x+width*.5), (int)(y+height*.5));
