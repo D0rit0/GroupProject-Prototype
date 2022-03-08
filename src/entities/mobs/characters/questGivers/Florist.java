@@ -7,7 +7,7 @@ public class Florist extends QuestGiver{
 
         super(x, y, "Florist");
 
-        dialogue= new DialogueBox( new String[] {"Hello"}, this);
+        dialogue= new DialogueBox( new String[] {"Hello", "I would love to help you with a bouquet, but I need to resolve a personal matter before I can help you."}, this);
 
         loadImage("src\\resources\\Male\\Male 13-2.png");
 
