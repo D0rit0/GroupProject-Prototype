@@ -1,4 +1,4 @@
 package entities.items;
 
-public class Flowers {
+public class Flowers extends QuestItem{
 }

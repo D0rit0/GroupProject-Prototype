@@ -17,7 +17,7 @@ public abstract class Entity {
     protected boolean collideable;
     protected boolean isVisible;
     protected boolean interactable = false;
-    protected String imagePath = "src\\resources\\atlas_32x.png";
+    protected String imagePath = "src\\resources\\atlas1_32x.png";
     protected Image image;
 
     protected Entity(int x, int y){

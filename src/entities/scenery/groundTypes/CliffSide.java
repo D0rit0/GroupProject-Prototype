@@ -33,6 +33,6 @@ public class CliffSide extends Ground{
             }
         }
         collideable=true;
-        loadImage("src\\resources\\atlas_32x.png");
+        loadImage("src\\resources\\atlas1_32x.png");
     }
 }

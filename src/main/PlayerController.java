@@ -4,6 +4,7 @@ import entities.mobs.Mob;
 import entities.mobs.PlayerCharacter;
 
 import util.CollisionHandler;
+import util.Decisions;
 import world.Tile;
 import world.Map;
 
@@ -13,10 +14,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import static main.AppPanel.gameState;
-import static main.AppPanel.dialogue;
-import static main.AppPanel.running;
-import static main.AppPanel.paused;
+import static main.AppPanel.*;
 
 public class PlayerController {
     protected int mouseX;
@@ -78,13 +76,20 @@ public class PlayerController {
             }
             //Controls for when in dialogue
             else if(gameState == dialogue){
-                if(key == KeyEvent.VK_SPACE) {
-                    if (player.currentDialogue.hasNext()) {
-                        player.currentDialogue.nextText();
-                    } else {
-                        player.currentDialogue.nextText();
+                if(player.currentDialogue.isQuestionState()){
+                    switch(key){
+                        case KeyEvent.VK_UP -> player.currentDialogue.question().previous();
+                        case KeyEvent.VK_DOWN -> player.currentDialogue.question().next();
+                        case KeyEvent.VK_ENTER ->{
+                            Decisions.outCome(player.currentDialogue.question().decision());
+                        }
+                    }
+                }else
+                    if(key == KeyEvent.VK_SPACE) {
+                    if (!player.currentDialogue.hasNext()) {
                         player.currentDialogue.close();
                     }
+                    player.currentDialogue.nextText();
                 }
             }
         }
@@ -111,7 +116,7 @@ public class PlayerController {
         if(dy != 0 && dx !=0){
             if(!AppPanel.mapScrollX && AppPanel.mapScrollY) {
                 player.setX(dx/2);
-                for(Tile[] tileList: Map.getLayerList()) {
+                for(Tile[] tileList: currentMap.getLayerList()) {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setY(-dy / 2);
@@ -125,7 +130,7 @@ public class PlayerController {
                 }
             }else if (!AppPanel.mapScrollY && AppPanel.mapScrollX){
                 player.setY(dy/2);
-                for(Tile[] tileList: Map.getLayerList()) {
+                for(Tile[] tileList: currentMap.getLayerList()) {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setX(-dx / 2);
@@ -138,7 +143,7 @@ public class PlayerController {
                     }
                 }
             }else if(AppPanel.mapScrollX){
-                for(Tile[] tileList: Map.getLayerList()) {
+                for(Tile[] tileList: currentMap.getLayerList()) {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setX(-dx / 2);
@@ -160,7 +165,7 @@ public class PlayerController {
             if(!AppPanel.mapScrollX) {
                 player.setX(dx);
             }else {
-                for(Tile[] tileList: Map.getLayerList()) {
+                for(Tile[] tileList: currentMap.getLayerList()) {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setX(-dx);
@@ -175,7 +180,7 @@ public class PlayerController {
             }if(!AppPanel.mapScrollY) {
                 player.setY(dy);
             }else{
-                for(Tile[] tileList: Map.getLayerList()) {
+                for(Tile[] tileList: currentMap.getLayerList()) {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setY(-dy);

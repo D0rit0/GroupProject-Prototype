@@ -8,7 +8,7 @@ public class SpriteLoader {
     private static BufferedImage spriteSheet;
     private static int ssRow;
     private static int ssCol;
-    public static Image loadImage(String path, int textureId){
+    public static Image loadImage(String path, int textureId, int tileMap){
 
         BufferedImageLoader loader = new BufferedImageLoader();
         try{
@@ -18,12 +18,25 @@ public class SpriteLoader {
         }
         SpriteSheet ss = new SpriteSheet(spriteSheet);
 
-        setImagePoint(textureId);
+        if(tileMap == 2){
+            setImagePoint2(textureId);
+        }else if (tileMap ==3) {
+            setImagePoint3(textureId);
+        }
+        else setImagePoint(textureId);
 
         return ss.grabImage(ssCol, ssRow, 32,32);
     }
     private static void setImagePoint(int tileId){
         ssRow = tileId/96+1;
         ssCol = tileId - 96*(ssRow-1);
+    }
+    private static void setImagePoint2(int tileId){
+        ssRow = tileId/32+1;
+        ssCol = tileId - 32*(ssRow-1);
+    }
+    private static void setImagePoint3(int tileId){
+        ssRow = tileId/48+1;
+        ssCol = tileId - 48*(ssRow-1);
     }
 }

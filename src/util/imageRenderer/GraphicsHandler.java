@@ -15,6 +15,8 @@ import static main.AppPanel.*;
 
 public class GraphicsHandler {
     public static java.util.Map<Integer, Image> textureMap = new HashMap<>();
+    public static java.util.Map<Integer, Image> textureMap2 = new HashMap<>();
+    static java.util.Map<Integer, Image> textures = new HashMap<>();
 
     private static final ImageObserver imageObserver = (img, infoflags, x, y, width, height) -> false;
 
@@ -30,11 +32,29 @@ public class GraphicsHandler {
 
     //Loads in textures into a map assigning the texture Id as the key
     public static void LoadTextures(int layer, int[][] dataArr){
+        int tileMap;
+
+
         //loads in textures for specified layer
         for(int[] array: dataArr){
             for(int textureId: array){
-                if(!textureMap.containsKey(textureId)&& textureId!=0) {
-                    textureMap.put(textureId, SpriteLoader.loadImage("src\\resources\\atlas_32x.png", textureId));
+                int subTextureId = textureId;
+                if(currentMap == market) {
+                    tileMap = 3;
+                    if(textureId > 769) {
+                        subTextureId = textureId - 768;
+                        tileMap = 2;
+                    }
+                    if(!textureMap2.containsKey(textureId)&& textureId!=0) {
+                        textureMap2.put(textureId, SpriteLoader.loadImage("src\\resources\\atlas"+tileMap+"_32x.png", subTextureId, tileMap));
+
+                    }
+                }else {
+                    tileMap = 1;
+                    if(!textureMap.containsKey(textureId)&& textureId!=0) {
+                        textureMap.put(textureId, SpriteLoader.loadImage("src\\resources\\atlas"+tileMap+"_32x.png", subTextureId, tileMap));
+
+                    }
                 }
             }
         }
@@ -42,7 +62,7 @@ public class GraphicsHandler {
     //renders all tiles
     public static void renderTiles(Graphics2D g2){
         //just checking each tile and seeing if it should be rendered
-        for(Tile[] tileList: Map.getLayerList()) {
+        for(Tile[] tileList: currentMap.getLayerList()) {
             for (Tile tile : tileList) {
                 if (tile != null) {
                     if (tile.isImageLoaded() && tile.isVisible()) {

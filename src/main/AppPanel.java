@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import static util.TileHandler.manageTiles;
 
 public class AppPanel extends JPanel {
-    private final String imagePath="src\\resources\\atlas_32x.png";
+    private final String imagePath="src\\resources\\atlas1_32x.png";
 
     public static final int width = 800;
     public static final int height = 800;
@@ -31,6 +31,11 @@ public class AppPanel extends JPanel {
     public static boolean mapScrollX = false;
     public static boolean mapScrollY = false;
 
+    public static final Map overWorld = new Map("src\\world\\Team Valentine World Map.tmx",
+            100, 100, 7);
+    public static final Map market = new Map("src\\world\\generalStore.tmx",
+            10, 10, 7);
+    public static Map currentMap;
 
     public static PlayerCharacter player;
     public static PlayerController playerController = new PlayerController();
@@ -55,7 +60,10 @@ public class AppPanel extends JPanel {
     private void run(){
         //spawns all needed objects
         spawnPlayer();
-        Map.init();
+        currentMap = market;
+        market.init();
+        currentMap = overWorld;
+        overWorld.init();
 
         //Game Timer
         ActionListener timerTask = e -> update();
@@ -119,7 +127,7 @@ public class AppPanel extends JPanel {
     //update method called by the game timer
     private void update() {
         playerController.move();
-        for(Tile tile: Map.getCollideableList()){
+        for(Tile tile: currentMap.getCollideableList()){
             if(TileHandler.shouldTileLoad(tile)){
                 CollisionHandler.checkCollide(tile);
             }
