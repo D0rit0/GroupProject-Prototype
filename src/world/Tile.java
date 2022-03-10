@@ -3,6 +3,7 @@ package world;
 import java.awt.*;
 
 import static util.imageRenderer.GraphicsHandler.textureMap;
+import static util.imageRenderer.GraphicsHandler.textureMap2;
 
 
 public class Tile {
@@ -16,13 +17,17 @@ public class Tile {
     public Image image;
     protected boolean imageLoaded = false;
 
-    public Tile(int x, int y, int tileId){
+    public Tile(int x, int y, int tileId, String map){
         this.tileId = tileId;
         this.x=x;
         this.y=y;
         if(x < 832 && -32 < x
         && y < 832 && -32 < y){
-            image = textureMap.get(tileId);
+            if(map.equals("src\\world\\Team Valentine World Map.tmx")) {
+                image = textureMap.get(tileId);
+            }else if(map.equals("src\\world\\generalStore.tmx")){
+                image = textureMap2.get(tileId);
+            }
             imageLoaded=true;
             isVisible=true;
         }

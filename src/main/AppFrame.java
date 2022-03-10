@@ -9,7 +9,7 @@ public class AppFrame extends JFrame {
     AppFrame(){
         this.add(new AppPanel());
         this.setTitle("ExplorationRPG");
-        this.setIconImage(SpriteLoader.loadImage("src\\resources\\atlas_32x.png",1082));
+        this.setIconImage(SpriteLoader.loadImage("src\\resources\\atlas1_32x.png",1082, 1));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);

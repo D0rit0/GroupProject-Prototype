@@ -3,15 +3,20 @@ package main;
 import entities.mobs.Mob;
 import entities.mobs.PlayerCharacter;
 
+import util.CollisionHandler;
+import util.Decisions;
 import world.Tile;
 import world.Map;
 
 import javax.swing.event.MouseInputAdapter;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-public class PlayerController{
+import static main.AppPanel.*;
+
+public class PlayerController {
     protected int mouseX;
     protected int mouseY;
     private static int dx = 0;
@@ -43,29 +48,51 @@ public class PlayerController{
         @Override
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
-                if(key == KeyEvent.VK_A){
-                    dx = -2;
-                    player.changeImage(player.getSsCol(), player.setSsRow(13));
-                    player.moving = true;
+            //controls for when in regular gameplay
+            if(gameState == running) {
+                if(key != KeyEvent.VK_E) {
+                    if (key == KeyEvent.VK_A) {
+                        dx = -2;
+                        player.changeImage(player.getSsCol(), player.setSsRow(player.getLeftFace()));
+                        player.moving = true;
+                    } else if (key == KeyEvent.VK_D) {
+                        dx = 2;
+                        player.changeImage(player.getSsCol(), player.setSsRow(player.getRightFace()));
+                        player.moving = true;
+                    }
+                    if (key == KeyEvent.VK_W) {
+                        player.changeImage(player.getSsCol(), player.setSsRow(player.getRearFace()));
+                        dy = -2;
+                        player.moving = true;
+                    } else if (key == KeyEvent.VK_S) {
+                        player.changeImage(player.getSsCol(), player.setSsRow(player.getCenterFace()));
+                        dy = 2;
+                        player.moving = true;
+                    }
+                    player.animationTimer.start();
+                }else {
+                    CollisionHandler.entityCollide();
                 }
-                else if(key == KeyEvent.VK_D){
-                    dx = 2;
-                    player.changeImage(player.getSsCol(), player.setSsRow(14));
-                    player.moving = true;
-                }
-                if(key == KeyEvent.VK_W) {
-                    player.changeImage(player.getSsCol(), player.setSsRow(15));
-                    dy = -2;
-                    player.moving = true;
-                }
-                else if(key == KeyEvent.VK_S) {
-                    player.changeImage(player.getSsCol(), player.setSsRow(12));
-                    dy = 2;
-                    player.moving = true;
-                }
-                player.animationTimer.start();
-
             }
+            //Controls for when in dialogue
+            else if(gameState == dialogue){
+                if(player.currentDialogue.isQuestionState()){
+                    switch(key){
+                        case KeyEvent.VK_UP -> player.currentDialogue.question().previous();
+                        case KeyEvent.VK_DOWN -> player.currentDialogue.question().next();
+                        case KeyEvent.VK_ENTER ->{
+                            Decisions.outCome(player.currentDialogue.question().decision());
+                        }
+                    }
+                }else
+                    if(key == KeyEvent.VK_SPACE) {
+                    if (!player.currentDialogue.hasNext()) {
+                        player.currentDialogue.close();
+                    }
+                    player.currentDialogue.nextText();
+                }
+            }
+        }
 
         @Override
         public void keyReleased(KeyEvent e) {
@@ -78,8 +105,10 @@ public class PlayerController{
                     dy = 0; player.moving = false;
                 }
             }
-            player.animationTimer.stop();
-            player.changeImage(26, player.getSsRow());
+            if(dx == 0 && dy == 0) {
+                player.animationTimer.stop();
+                player.changeImage(player.getRestState(), player.getSsRow());
+            }
         }
     };
     public void move(){
@@ -87,7 +116,7 @@ public class PlayerController{
         if(dy != 0 && dx !=0){
             if(!AppPanel.mapScrollX && AppPanel.mapScrollY) {
                 player.setX(dx/2);
-                for(Tile[] tileList: Map.getLayerList()) {
+                for(Tile[] tileList: currentMap.getLayerList()) {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setY(-dy / 2);
@@ -101,7 +130,7 @@ public class PlayerController{
                 }
             }else if (!AppPanel.mapScrollY && AppPanel.mapScrollX){
                 player.setY(dy/2);
-                for(Tile[] tileList: Map.getLayerList()) {
+                for(Tile[] tileList: currentMap.getLayerList()) {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setX(-dx / 2);
@@ -114,7 +143,7 @@ public class PlayerController{
                     }
                 }
             }else if(AppPanel.mapScrollX){
-                for(Tile[] tileList: Map.getLayerList()) {
+                for(Tile[] tileList: currentMap.getLayerList()) {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setX(-dx / 2);
@@ -136,7 +165,7 @@ public class PlayerController{
             if(!AppPanel.mapScrollX) {
                 player.setX(dx);
             }else {
-                for(Tile[] tileList: Map.getLayerList()) {
+                for(Tile[] tileList: currentMap.getLayerList()) {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setX(-dx);
@@ -151,7 +180,7 @@ public class PlayerController{
             }if(!AppPanel.mapScrollY) {
                 player.setY(dy);
             }else{
-                for(Tile[] tileList: Map.getLayerList()) {
+                for(Tile[] tileList: currentMap.getLayerList()) {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setY(-dy);

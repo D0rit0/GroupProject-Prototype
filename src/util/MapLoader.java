@@ -18,9 +18,13 @@ import java.util.Objects;
 
 
 public class MapLoader {
-    private static final String fileLocation = "src\\world\\Team Valentine World Map.tmx";
+    private final String fileLocation;
 
-    private static Document documentLoader() {
+    public MapLoader(String mapLocation){
+        fileLocation = mapLocation;
+    }
+
+    private Document documentLoader() {
         //create a document builder factory
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
@@ -29,7 +33,7 @@ public class MapLoader {
             //gets a document builder from the factory.
             DocumentBuilder docBuilder = dbf.newDocumentBuilder();
             //parses over the file and creates a document object out of it.
-            Document doc = docBuilder.parse(new File(MapLoader.fileLocation));
+            Document doc = docBuilder.parse(new File(fileLocation));
             System.out.println("success");
             doc.getDocumentElement().normalize();
             return doc;
@@ -39,7 +43,7 @@ public class MapLoader {
         return null;
     }
 
-    public static String getLayer(int layerNum){
+    public String getLayer(int layerNum){
         String dataString = null;
         //gets a list of all layer nodes
         NodeList list = Objects.requireNonNull(documentLoader()).getElementsByTagName("layer");
@@ -70,7 +74,7 @@ public class MapLoader {
         }
         return dataString;
     }
-    public static int[][] loadLayerArray(String dataString){
+    public int[][] loadLayerArray(String dataString, int mapX, int mapY){
         assert dataString != null;
 
         //removes all new line characters and splits the string at each comma and creates a string array out of it.
@@ -83,11 +87,11 @@ public class MapLoader {
         }
 
         //takes our new int array and turns it into a 2d int array
-        int[][] dataArr = new int[100][100];
+        int[][] dataArr = new int[mapX][mapY];
 
         //found better method from https://stackoverflow.com/questions/5134555/how-to-convert-a-1d-array-to-2d-array
-        for(int i = 0; i < 100; i++){
-            System.arraycopy(dataArrTemp, (i*100), dataArr[i], 0,100);
+        for(int i = 0; i < mapX; i++){
+            System.arraycopy(dataArrTemp, (i*mapX), dataArr[i], 0,mapX);
         }
         System.out.println(Arrays.deepToString(dataArr));
         return dataArr;

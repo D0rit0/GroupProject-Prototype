@@ -20,21 +20,38 @@ public abstract class Mob extends Entity {
     public Mob(int x, int y){
         super(x,y);
     }
-    public Mob(int x, int y, boolean isVisible){
-        super(x,y,isVisible);
+
+    public int getLeftFace(){
+        return leftFace;
+    }
+
+    public int getCenterFace() {
+        return centerFace;
+    }
+
+    public int getRearFace() {
+        return rearFace;
+    }
+
+    public int getRightFace() {
+        return rightFace;
+    }
+
+    public int getRestState() {
+        return restState;
     }
 
     public boolean isMoving(){
         return moving;
     }
     public void setLeft(int newLeft){
-        x = newLeft;
+        x = newLeft-8;
     }
     public void setRight(int newRight){
         x = newRight - width;
     }
     public void setTop(int newTop){
-        y = newTop;
+        y = newTop-8;
     }
     public void setBottom(int newBottom){
         y= newBottom-height;

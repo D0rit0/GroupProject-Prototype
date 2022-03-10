@@ -4,6 +4,10 @@ import entities.mobs.Mob;
 import entities.mobs.PeacefulAnimal;
 import entities.mobs.PlayerCharacter;
 
+import entities.mobs.characters.Crush;
+import entities.mobs.characters.questGivers.Baker;
+import entities.mobs.characters.questGivers.Florist;
+import entities.mobs.characters.questGivers.Merchant;
 import util.CollisionHandler;
 import util.TileHandler;
 import util.imageRenderer.GraphicsHandler;
@@ -19,7 +23,7 @@ import java.util.ArrayList;
 import static util.TileHandler.manageTiles;
 
 public class AppPanel extends JPanel {
-    private final String imagePath="src\\resources\\atlas_32x.png";
+    private final String imagePath="src\\resources\\atlas1_32x.png";
 
     public static final int width = 800;
     public static final int height = 800;
@@ -28,6 +32,11 @@ public class AppPanel extends JPanel {
     public static boolean mapScrollX = false;
     public static boolean mapScrollY = false;
 
+    public static final Map overWorld = new Map("src\\world\\Team Valentine World Map.tmx",
+            100, 100, 7);
+    public static final Map market = new Map("src\\world\\generalStore.tmx",
+            10, 10, 7);
+    public static Map currentMap;
 
     public static PlayerCharacter player;
     public static PlayerController playerController = new PlayerController();
@@ -36,10 +45,10 @@ public class AppPanel extends JPanel {
 
     //Stole game state idea from https://www.youtube.com/watch?v=_SJU99LU1IQ
     public static int gameState;
-    public final int titleScreen = 0;
-    public final int running = 1;
-    public final int paused = 2;
-    public final int dialogue = 3;
+    public static final int titleScreen = 0;
+    public static final int running = 1;
+    public static final int paused = 2;
+    public static final int dialogue = 3;
 
     AppPanel(){
         this.setFocusable(true);
@@ -52,11 +61,15 @@ public class AppPanel extends JPanel {
     private void run(){
         //spawns all needed objects
         spawnPlayer();
-        Map.init();
+        currentMap = market;
+        market.init();
+        currentMap = overWorld;
+        overWorld.init();
 
         //Game Timer
         ActionListener timerTask = e -> update();
         Timer gameTimer = new Timer(delay, timerTask);
+        gameState = running;
         gameTimer.start();
     }
 
@@ -75,8 +88,12 @@ public class AppPanel extends JPanel {
         addKeyListener(playerController.MyKeyAdapter);
 
         //Adds player to the list of mobs.
-        mobList.add(player);
         mobList.add(new PeacefulAnimal(player.getX() +32, player.getY(), "Cat"));
+        mobList.add(new Florist(player.getX() + 64, player.getY() - 32, "Florist"));
+        mobList.add(new Baker(player.getX() + 32, player.getY() + 32, "Baker"));
+        mobList.add(new Merchant(player.getX() - 32, player.getY(), "Merchant"));
+        mobList.add(player);
+        mobList.add(new Crush(player.getX() +32, player.getY() - 64, "<3"));
     }
 
     //renders graphics
@@ -84,17 +101,8 @@ public class AppPanel extends JPanel {
         super.paintComponent(g);
 
         //getting the information for what to render
-        render((Graphics2D) g);
+        GraphicsHandler.render((Graphics2D) g);
     }
-
-    //tells graphics renderer what to render
-    private void render(Graphics2D g2){
-
-        GraphicsHandler.renderTiles(g2);
-
-        GraphicsHandler.renderMobs(g2);
-    }
-
 
     public static ArrayList<Mob> getMobList(){
         return mobList;
@@ -121,7 +129,7 @@ public class AppPanel extends JPanel {
     //update method called by the game timer
     private void update() {
         playerController.move();
-        for(Tile tile: Map.getCollideableList()){
+        for(Tile tile: currentMap.getCollideableList()){
             if(TileHandler.shouldTileLoad(tile)){
                 CollisionHandler.checkCollide(tile);
             }

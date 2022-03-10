@@ -9,10 +9,25 @@ import java.util.List;
 
 public class Map {
 
-    private static final Tile[][] layerList = new Tile[7][100*100];
-    private static final List<Tile> collideableList = new ArrayList<>();
+    private final Tile[][] layerList;
+    private final List<Tile> collideableList = new ArrayList<>();
+    private final String mapLocation;
+    private final int mapX;
+    private final int mapY;
+    private final int layers;
+    private final MapLoader mapLoader;
 
-    private static void calculateCollideables(){
+    public Map(String mapLocation, int mapX, int mapY, int layers){
+        this.mapLocation = mapLocation;
+        this.mapX = mapX;
+        this.mapY = mapY;
+        this.layers = layers;
+
+        mapLoader = new MapLoader(mapLocation);
+        layerList = new Tile[layers][mapX*mapY];
+    }
+
+    private void calculateCollideables(){
         for(Tile[] list: layerList){
             for(Tile tile: list){
                 if(tile != null && tile.isCollideable()){
@@ -43,19 +58,25 @@ public class Map {
         }
     }
     //Loads the textures and creates the tile objects using the data given from our map loader class
-    public static void init() {
+    public void init() {
+        int[] collideableTileIDs = new int[0];
         int[][] mapData;
+        if(mapLocation.equals("src\\world\\Team Valentine World Map.tmx")){
+            collideableTileIDs = TileHandler.collideableTileIDsMap1;
+        }else if(mapLocation.equals("src\\world\\generalStore.tmx")){
+            collideableTileIDs = TileHandler.collideableTileIDsMap2;
+        }
         for (int temp = 0; temp < 7; temp++) {
-            mapData = MapLoader.loadLayerArray(MapLoader.getLayer(temp+1));
+            mapData = mapLoader.loadLayerArray(mapLoader.getLayer(temp+1), mapX, mapY);
             GraphicsHandler.LoadTextures(temp+1, mapData);
             int i = 0;
             for (int y = 0; y < mapData.length; y++) {
                 for (int x = 0; x < mapData[y].length; x++) {
                     try {
                         if(mapData[y][x]!=0) {
-                            layerList[temp][i] = new Tile(x * 32, y * 32, mapData[y][x]);
-                            for(int z = 0; z < TileHandler.collideableTileIDs.length; z++){
-                                if(TileHandler.collideableTileIDs[z]==mapData[y][x]){
+                            layerList[temp][i] = new Tile(x * 32, y * 32, mapData[y][x], mapLocation);
+                            for(int z = 0; z < collideableTileIDs.length; z++){
+                                if(collideableTileIDs[z]==mapData[y][x]){
                                     layerList[temp][i].setIsCollideable(true);
                                 }
                             }
@@ -72,11 +93,11 @@ public class Map {
 
         System.out.println("it worked");
     }
-    public static Tile[][] getLayerList(){
+    public Tile[][] getLayerList(){
         return layerList;
     }
 
-    public static List<Tile> getCollideableList() {
+    public List<Tile> getCollideableList() {
         return collideableList;
     }
 }
