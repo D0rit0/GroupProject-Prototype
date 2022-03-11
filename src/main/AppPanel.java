@@ -12,10 +12,12 @@ import util.CollisionHandler;
 import util.TileHandler;
 import util.imageRenderer.GraphicsHandler;
 
+import world.DoorTrigger;
 import world.Map;
 import world.Tile;
 
 import javax.swing.*;
+import javax.xml.crypto.dom.DOMCryptoContext;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class AppPanel extends JPanel {
     public static PlayerController playerController = new PlayerController();
 
     public static final ArrayList<Mob> mobList = new ArrayList<>();
+    public static final ArrayList<DoorTrigger> DoorList = new ArrayList<>();
 
     //Stole game state idea from https://www.youtube.com/watch?v=_SJU99LU1IQ
     public static int gameState;
@@ -94,6 +97,12 @@ public class AppPanel extends JPanel {
         mobList.add(new Merchant(player.getX() - 32, player.getY(), "Merchant"));
         mobList.add(player);
         mobList.add(new Crush(player.getX() +32, player.getY() - 64, "<3"));
+        //overWorld.getDoorList().add(new DoorTrigger(player.getX(), player.getY(),23, overWorld.getMapLocation(), market));
+        DoorTrigger test = new DoorTrigger(1824, 832,23, overWorld.getMapLocation(), market, null);
+        overWorld.getDoorList().add(test);
+        market.getDoorList().add(new DoorTrigger(16*9, 32*9,23, market.getMapLocation(), overWorld,test));
+        test.setLinkedDoor(market.getDoorList().get(0));
+
     }
 
     //renders graphics

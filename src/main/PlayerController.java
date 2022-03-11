@@ -72,6 +72,7 @@ public class PlayerController {
                     player.animationTimer.start();
                 }else {
                     CollisionHandler.entityCollide();
+                    CollisionHandler.doorCollide();
                 }
             }
             //Controls for when in dialogue
@@ -123,6 +124,7 @@ public class PlayerController {
                         }
                     }
                 }
+                currentMap.moveDoorsY(-dy/2);
                 for(Mob mob: AppPanel.getMobList()){
                     if(!(mob instanceof PlayerCharacter)){
                         mob.setY(-dy/2);
@@ -137,6 +139,7 @@ public class PlayerController {
                         }
                     }
                 }
+                currentMap.moveDoorsX(-dx/2);
                 for(Mob mob: AppPanel.getMobList()){
                     if(!(mob instanceof PlayerCharacter)){
                         mob.setX(-dx/2);
@@ -151,6 +154,8 @@ public class PlayerController {
                         }
                     }
                 }
+                currentMap.moveDoorsX(-dx/2);
+                currentMap.moveDoorsY(-dy/2);
                 for(Mob mob: AppPanel.getMobList()){
                     if(!(mob instanceof PlayerCharacter)){
                         mob.setX(-dx/2);
@@ -172,6 +177,7 @@ public class PlayerController {
                         }
                     }
                 }
+                currentMap.moveDoorsX(-dx);
                 for(Mob mob: AppPanel.getMobList()){
                     if(!(mob instanceof PlayerCharacter)){
                         mob.setX(-dx);
@@ -184,9 +190,11 @@ public class PlayerController {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setY(-dy);
+
                         }
                     }
                 }
+                currentMap.moveDoorsY(-dy);
                 for(Mob mob: AppPanel.getMobList()){
                     if(!(mob instanceof PlayerCharacter)){
                         mob.setY(-dy);

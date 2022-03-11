@@ -2,6 +2,7 @@ package util;
 
 import entities.Entity;
 import entities.mobs.Npc;
+import world.DoorTrigger;
 import world.Tile;
 
 import java.awt.*;
@@ -38,6 +39,17 @@ public class CollisionHandler {
 
         }
     }
+    public static void doorCollide(){
+        for(DoorTrigger e: currentMap.getDoorList()){
+            Rectangle r1 = e.getBounds();
+            Rectangle r2 = player.getBounds();
+            if (r1.intersects(r2)) {
+                e.trigger();
+            }
+        }
+
+    }
+
     public static void entityCollide(){
         for(Entity e: getMobList()) {
             Rectangle r1 = e.getBounds();

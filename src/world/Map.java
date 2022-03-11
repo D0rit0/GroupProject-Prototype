@@ -16,6 +16,7 @@ public class Map {
     private final int mapY;
     private final int layers;
     private final MapLoader mapLoader;
+    private final ArrayList<DoorTrigger> DoorList = new ArrayList<>();
 
     public Map(String mapLocation, int mapX, int mapY, int layers){
         this.mapLocation = mapLocation;
@@ -75,8 +76,8 @@ public class Map {
                     try {
                         if(mapData[y][x]!=0) {
                             layerList[temp][i] = new Tile(x * 32, y * 32, mapData[y][x], mapLocation);
-                            for(int z = 0; z < collideableTileIDs.length; z++){
-                                if(collideableTileIDs[z]==mapData[y][x]){
+                            for (int collideableTileID : collideableTileIDs) {
+                                if (collideableTileID == mapData[y][x]) {
                                     layerList[temp][i].setIsCollideable(true);
                                 }
                             }
@@ -99,5 +100,25 @@ public class Map {
 
     public List<Tile> getCollideableList() {
         return collideableList;
+    }
+    public String getMapLocation(){
+        return mapLocation;
+    }
+
+    public void moveDoorsX(int dx){
+        for(DoorTrigger e: DoorList){
+            e.setX(dx);
+        }
+
+    }
+    public void moveDoorsY(int dy){
+        for(DoorTrigger e: DoorList){
+            e.setY(dy);
+        }
+
+    }
+
+    public ArrayList<DoorTrigger> getDoorList(){
+        return DoorList;
     }
 }
