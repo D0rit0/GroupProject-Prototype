@@ -27,9 +27,13 @@ public class Decisions {
         }if ("Florist1".equals(d)) {
             System.out.print("y");
         }
-        // these need to be changed probably but they are placeholders
+
         if ("Baker0".equals(d)) {
             player.getInventory().add(new Cake());
+            System.out.print("y");
+            Npc e = (Npc)mobList.get(1);
+            e.setDialogue(new String []{"Such a sweetheart."});
+        } if ("Baker1".equals(d)) {
             System.out.print("y");
         }
 
