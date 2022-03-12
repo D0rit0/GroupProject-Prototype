@@ -15,6 +15,7 @@ import util.imageRenderer.GraphicsHandler;
 
 //import world.DoorTrigger;
 //import world.DoorTrigger;
+import world.DoorTrigger;
 import world.Map;
 import world.Tile;
 
@@ -46,7 +47,7 @@ public class AppPanel extends JPanel {
     public static PlayerCharacter player;
     public static PlayerController playerController = new PlayerController();
 
-    public static final ArrayList<Mob> mobList = new ArrayList<>();
+    //public static final ArrayList<Mob> mobList = new ArrayList<>();
     //public static final ArrayList<DoorTrigger> DoorList = new ArrayList<>();
 
     //Stole game state idea from https://www.youtube.com/watch?v=_SJU99LU1IQ
@@ -67,12 +68,17 @@ public class AppPanel extends JPanel {
     private void run(){
         //spawns all needed objects
         spawnPlayer();
+
+        //loads the maps
         currentMap = market;
         market.init();
         currentMap = florist;
         florist.init();
         currentMap = overWorld;
         overWorld.init();
+
+        spawnNpc();
+        spawnDoorTriggers();
 
         //Game Timer
         ActionListener timerTask = e -> update();
@@ -94,21 +100,20 @@ public class AppPanel extends JPanel {
 
         //adds the keyListener from the keyAdapter
         addKeyListener(playerController.MyKeyAdapter);
-
-        //Adds player to the list of mobs.
-        mobList.add(new PeacefulAnimal(player.getX() +32, player.getY(), "Cat"));
-        mobList.add(new Florist(player.getX() + 64, player.getY() - 32, "Florist"));
-        mobList.add(new Baker(player.getX() + 32, player.getY() + 32, "Baker"));
-        mobList.add(new Merchant(player.getX() - 32, player.getY(), "Merchant"));
-        mobList.add(player);
-        mobList.add(new Crush(player.getX() +32, player.getY() - 64, "<3"));
-        mobList.add(new Richard(player.getX() + 32, player.getY() + 64, "Richard"));
-        //overWorld.getDoorList().add(new DoorTrigger(player.getX(), player.getY(),23, overWorld.getMapLocation(), market));
-        //DoorTrigger test = new DoorTrigger(1824, 832,23, overWorld.getMapLocation(), florist, null);
-        //overWorld.getDoorList().add(test);
-        //market.getDoorList().add(new DoorTrigger(16*9, 32*9,23, market.getMapLocation(), overWorld,test));
-        //test.setLinkedDoor(market.getDoorList().get(0));
-
+    }
+    private void spawnNpc(){
+        overWorld.getNpcList().add(new PeacefulAnimal(player.getX() +32, player.getY(), "Cat"));
+        florist.getNpcList().add(new Florist(3*32, 128, "Florist"));
+        overWorld.getNpcList().add(new Baker(player.getX() + 32, player.getY() + 32, "Baker"));
+        overWorld.getNpcList().add(new Merchant(player.getX() - 32, player.getY(), "Merchant"));
+        overWorld.getNpcList().add(new Crush(player.getX() +32, player.getY() - 64, "<3"));
+        overWorld.getNpcList().add(new Richard(player.getX() + 32, player.getY() + 64, "Richard"));
+    }
+    private void spawnDoorTriggers(){
+        DoorTrigger floristDoor = new DoorTrigger(1824, 832,23, overWorld.getMapLocation(), florist, null);
+        overWorld.getDoorList().add(floristDoor);
+        florist.getDoorList().add(new DoorTrigger(16*9, 32*9,23, florist.getMapLocation(), overWorld,floristDoor));
+        floristDoor.setLinkedDoor(florist.getDoorList().get(0));
     }
 
     //renders graphics
@@ -117,10 +122,6 @@ public class AppPanel extends JPanel {
 
         //getting the information for what to render
         GraphicsHandler.render((Graphics2D) g);
-    }
-
-    public static ArrayList<Mob> getMobList(){
-        return mobList;
     }
 
     //checks to see if player is past the scroll threshold and which direction the player is moving

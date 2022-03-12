@@ -12,4 +12,7 @@ public class Richard extends QuestGiver{
         loadImage("src\\resources\\Male\\Male 06-3.png");
 
     }
+    public void dialogueCheck() {
+
+    }
 }

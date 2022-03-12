@@ -20,6 +20,7 @@ abstract public class Npc extends Mob{
     }
 
     public void interact(){
+        dialogueCheck();
         gameState = AppPanel.dialogue;
         player.currentDialogue = dialogue;
 
@@ -38,6 +39,10 @@ abstract public class Npc extends Mob{
 
 
         changeImage(ssCol,ssRow);
+    }
+
+    protected void dialogueCheck() {
+
     }
 
     public void setDialogue(String [] dialogueText){

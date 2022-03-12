@@ -14,4 +14,7 @@ public class Baker extends QuestGiver {
         loadImage("src\\resources\\Female\\Female 19-1.png");
 
     }
+    public void dialogueCheck() {
+
+    }
 }

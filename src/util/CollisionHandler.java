@@ -51,13 +51,11 @@ public class CollisionHandler {
     }
 
     public static void entityCollide(){
-        for(Entity e: getMobList()) {
+        for(Npc e: currentMap.getNpcList()) {
             Rectangle r1 = e.getBounds();
             Rectangle r2 = player.getBounds();
             if (r1.intersects(r2) && e.isInteractable()) {
-                if (e instanceof Npc) {
-                    ((Npc) e).interact();
-                }
+                e.interact();
             }
         }
     }

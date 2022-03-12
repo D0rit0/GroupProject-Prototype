@@ -125,10 +125,8 @@ public class PlayerController {
                     }
                 }
                 currentMap.moveDoorsY(-dy/2);
-                for(Mob mob: AppPanel.getMobList()){
-                    if(!(mob instanceof PlayerCharacter)){
-                        mob.setY(-dy/2);
-                    }
+                for(Mob mob: currentMap.getNpcList()){
+                    mob.setY(-dy/2);
                 }
             }else if (!AppPanel.mapScrollY && AppPanel.mapScrollX){
                 player.setY(dy/2);
@@ -140,10 +138,8 @@ public class PlayerController {
                     }
                 }
                 currentMap.moveDoorsX(-dx/2);
-                for(Mob mob: AppPanel.getMobList()){
-                    if(!(mob instanceof PlayerCharacter)){
-                        mob.setX(-dx/2);
-                    }
+                for(Mob mob: currentMap.getNpcList()){
+                    mob.setX(-dx/2);
                 }
             }else if(AppPanel.mapScrollX){
                 for(Tile[] tileList: currentMap.getLayerList()) {
@@ -156,11 +152,9 @@ public class PlayerController {
                 }
                 currentMap.moveDoorsX(-dx/2);
                 currentMap.moveDoorsY(-dy/2);
-                for(Mob mob: AppPanel.getMobList()){
-                    if(!(mob instanceof PlayerCharacter)){
-                        mob.setX(-dx/2);
-                        mob.setY(-dy/2);
-                    }
+                for(Mob mob: currentMap.getNpcList()){
+                    mob.setX(-dx/2);
+                    mob.setY(-dy/2);
                 }
             }else{
                 player.setX(dx/2);
@@ -178,10 +172,8 @@ public class PlayerController {
                     }
                 }
                 currentMap.moveDoorsX(-dx);
-                for(Mob mob: AppPanel.getMobList()){
-                    if(!(mob instanceof PlayerCharacter)){
-                        mob.setX(-dx);
-                    }
+                for(Mob mob: currentMap.getNpcList()){
+                    mob.setX(-dx);
                 }
             }if(!AppPanel.mapScrollY) {
                 player.setY(dy);
@@ -195,10 +187,8 @@ public class PlayerController {
                     }
                 }
                 currentMap.moveDoorsY(-dy);
-                for(Mob mob: AppPanel.getMobList()){
-                    if(!(mob instanceof PlayerCharacter)){
-                        mob.setY(-dy);
-                    }
+                for(Mob mob: currentMap.getNpcList()){
+                    mob.setY(-dy);
                 }
             }
         }

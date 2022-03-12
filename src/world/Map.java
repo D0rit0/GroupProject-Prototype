@@ -1,5 +1,6 @@
 package world;
 
+import entities.mobs.Npc;
 import util.MapLoader;
 import util.TileHandler;
 import util.imageRenderer.GraphicsHandler;
@@ -11,12 +12,14 @@ public class Map {
 
     private final Tile[][] layerList;
     private final List<Tile> collideableList = new ArrayList<>();
+    private final ArrayList<DoorTrigger> DoorList = new ArrayList<>();
     private final String mapLocation;
     private final int mapX;
     private final int mapY;
     private final int layers;
     private final MapLoader mapLoader;
-    private final ArrayList<DoorTrigger> DoorList = new ArrayList<>();
+
+    private ArrayList<Npc> npcList = new ArrayList<Npc>();
 
     public Map(String mapLocation, int mapX, int mapY, int layers){
         this.mapLocation = mapLocation;
@@ -120,5 +123,9 @@ public class Map {
 
     public ArrayList<DoorTrigger> getDoorList(){
         return DoorList;
+    }
+
+    public ArrayList<Npc> getNpcList(){
+        return npcList;
     }
 }

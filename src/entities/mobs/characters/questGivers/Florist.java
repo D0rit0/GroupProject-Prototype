@@ -2,6 +2,8 @@ package entities.mobs.characters.questGivers;
 
 import main.DialogueBox;
 
+import static main.AppPanel.player;
+
 public class Florist extends QuestGiver{
     public Florist(int x, int y, String name) {
 
@@ -11,6 +13,10 @@ public class Florist extends QuestGiver{
                 this, "Can you help me?", new String[] {"Yes", "No"});
 
         loadImage("src\\resources\\Male\\Male 13-2.png");
+
+
+    }
+    public void dialogueCheck() {
 
     }
 }

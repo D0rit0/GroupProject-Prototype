@@ -96,11 +96,11 @@ public class GraphicsHandler {
 
     //renders all mobs
     public static void renderMobs(Graphics2D g2){
-        for(Mob entity: mobList){
+        for(Mob entity: currentMap.getNpcList()){
             if(entity instanceof Npc){
                 g2.drawImage(entity.getImage(),entity.getX(),entity.getY(),imageObserver);
-            }else
-                g2.drawImage(entity.getImage(), entity.getX(), entity.getY(), imageObserver);
+            }
         }
+        g2.drawImage(player.getImage(),player.getX(),player.getY(),imageObserver);
     }
 }
