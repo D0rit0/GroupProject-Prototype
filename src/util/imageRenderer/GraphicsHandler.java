@@ -17,6 +17,7 @@ import static main.AppPanel.*;
 public class GraphicsHandler {
     public static java.util.Map<Integer, Image> textureMap = new HashMap<>();
     public static java.util.Map<Integer, Image> textureMap2 = new HashMap<>();
+    public static java.util.Map<Integer, Image> textureMap3 = new HashMap<>();
     static java.util.Map<Integer, Image> textures = new HashMap<>();
 
     private static final ImageObserver imageObserver = (img, infoflags, x, y, width, height) -> false;
@@ -37,7 +38,7 @@ public class GraphicsHandler {
     }
 
     //Loads in textures into a map assigning the texture Id as the key
-    public static void LoadTextures(int layer, int[][] dataArr){
+    public static void LoadTextures(int[][] dataArr){
         int tileMap;
 
 
@@ -45,7 +46,7 @@ public class GraphicsHandler {
         for(int[] array: dataArr){
             for(int textureId: array){
                 int subTextureId = textureId;
-                if(currentMap == market) {
+                if (currentMap == market) {
                     tileMap = 3;
                     if(textureId > 769) {
                         subTextureId = textureId - 768;
@@ -55,11 +56,25 @@ public class GraphicsHandler {
                         textureMap2.put(textureId, SpriteLoader.loadImage("src\\resources\\atlas"+tileMap+"_32x.png", subTextureId, tileMap));
 
                     }
-                }else {
+                }
+                else if(currentMap == overWorld) {
                     tileMap = 1;
                     if(!textureMap.containsKey(textureId)&& textureId!=0) {
                         textureMap.put(textureId, SpriteLoader.loadImage("src\\resources\\atlas"+tileMap+"_32x.png", subTextureId, tileMap));
 
+                    }
+                }
+                else if(currentMap == florist){
+                    tileMap = 3;
+                    if(textureId > 769 && textureId < 1281){
+                        subTextureId = textureId - 768;
+                        tileMap = 2;
+                    }else if(textureId > 1281){
+                        subTextureId = textureId - 1280;
+                        tileMap = 1;
+                    }
+                    if(!textureMap3.containsKey(textureId)&&textureId!=0){
+                        textureMap3.put(textureId, SpriteLoader.loadImage("src\\resources\\atlas"+tileMap+"_32x.png", subTextureId , tileMap));
                     }
                 }
             }

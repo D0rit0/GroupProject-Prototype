@@ -17,18 +17,20 @@ public class Decisions {
         if ("Merchant0".equals(d)) {
             player.getInventory().add(new CardGame());
             System.out.print("h");
-            currentMap = market;
+            currentMap = florist;
         }
         if ("Florist0".equals(d)) {
             player.getInventory().add(new Envelope());
             System.out.print("y");
-            currentMap = market;
+            Npc e = (Npc)mobList.get(1);
+            e.setDialogue(new String []{"Really! that means so much thank you!"});
+        }if ("Florist1".equals(d)) {
+            System.out.print("y");
         }
         // these need to be changed probably but they are placeholders
         if ("Baker0".equals(d)) {
             player.getInventory().add(new Cake());
             System.out.print("y");
-            currentMap = market;
         }
 
     }

@@ -62,14 +62,14 @@ public class Map {
     public void init() {
         int[] collideableTileIDs = new int[0];
         int[][] mapData;
-        if(mapLocation.equals("src\\world\\Team Valentine World Map.tmx")){
-            collideableTileIDs = TileHandler.collideableTileIDsMap1;
-        }else if(mapLocation.equals("src\\world\\generalStore.tmx")){
-            collideableTileIDs = TileHandler.collideableTileIDsMap2;
+        switch (mapLocation) {
+            case "src\\world\\Team Valentine World Map.tmx" -> collideableTileIDs = TileHandler.collideableTileIDsMap1;
+            case "src\\world\\generalStore.tmx" -> collideableTileIDs = TileHandler.collideableTileIDsMap2;
+            case "src\\world\\Florist.tmx" -> collideableTileIDs = TileHandler.collideableTileIDsMap2;
         }
-        for (int temp = 0; temp < 7; temp++) {
+        for (int temp = 0; temp < layers; temp++) {
             mapData = mapLoader.loadLayerArray(mapLoader.getLayer(temp+1), mapX, mapY);
-            GraphicsHandler.LoadTextures(temp+1, mapData);
+            GraphicsHandler.LoadTextures(mapData);
             int i = 0;
             for (int y = 0; y < mapData.length; y++) {
                 for (int x = 0; x < mapData[y].length; x++) {

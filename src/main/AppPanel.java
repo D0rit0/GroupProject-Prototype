@@ -38,6 +38,7 @@ public class AppPanel extends JPanel {
             100, 100, 7);
     public static final Map market = new Map("src\\world\\generalStore.tmx",
             10, 10, 7);
+    public static final Map florist = new Map("src\\world\\Florist.tmx",10,11, 9);
     public static Map currentMap;
 
     public static PlayerCharacter player;
@@ -66,6 +67,8 @@ public class AppPanel extends JPanel {
         spawnPlayer();
         currentMap = market;
         market.init();
+        currentMap = florist;
+        florist.init();
         currentMap = overWorld;
         overWorld.init();
 
@@ -98,7 +101,7 @@ public class AppPanel extends JPanel {
         mobList.add(player);
         mobList.add(new Crush(player.getX() +32, player.getY() - 64, "<3"));
         //overWorld.getDoorList().add(new DoorTrigger(player.getX(), player.getY(),23, overWorld.getMapLocation(), market));
-        DoorTrigger test = new DoorTrigger(1824, 832,23, overWorld.getMapLocation(), market, null);
+        DoorTrigger test = new DoorTrigger(1824, 832,23, overWorld.getMapLocation(), florist, null);
         overWorld.getDoorList().add(test);
         market.getDoorList().add(new DoorTrigger(16*9, 32*9,23, market.getMapLocation(), overWorld,test));
         test.setLinkedDoor(market.getDoorList().get(0));

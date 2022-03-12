@@ -4,6 +4,7 @@ import java.awt.*;
 
 import static util.imageRenderer.GraphicsHandler.textureMap;
 import static util.imageRenderer.GraphicsHandler.textureMap2;
+import static util.imageRenderer.GraphicsHandler.textureMap3;
 
 
 public class Tile {
@@ -27,6 +28,8 @@ public class Tile {
                 image = textureMap.get(tileId);
             }else if(map.equals("src\\world\\generalStore.tmx")){
                 image = textureMap2.get(tileId);
+            }else if(map.equals("src\\world\\Florist.tmx")){
+                image = textureMap3.get(tileId);
             }
             imageLoaded=true;
             isVisible=true;

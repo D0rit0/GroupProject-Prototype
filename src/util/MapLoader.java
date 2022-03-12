@@ -87,10 +87,10 @@ public class MapLoader {
         }
 
         //takes our new int array and turns it into a 2d int array
-        int[][] dataArr = new int[mapX][mapY];
+        int[][] dataArr = new int[mapY][mapX];
 
         //found better method from https://stackoverflow.com/questions/5134555/how-to-convert-a-1d-array-to-2d-array
-        for(int i = 0; i < mapX; i++){
+        for(int i = 0; i < mapY; i++){
             System.arraycopy(dataArrTemp, (i*mapX), dataArr[i], 0,mapX);
         }
         System.out.println(Arrays.deepToString(dataArr));
