@@ -18,6 +18,12 @@ public class Decisions {
     static CardGame cardGame = new CardGame();
     static Envelope loverLetter = new Envelope();
 
+    private static boolean questStep2 = false;
+
+    public static boolean isQuestStep2(){
+        return questStep2;
+    }
+
 
     public static void outCome(String d){
         if ("Merchant0".equals(d)) {
@@ -32,8 +38,7 @@ public class Decisions {
             e.setDialogue(new String []{"Really! that means so much thank you!"});
         }if ("Florist1".equals(d)) {
             System.out.print("y");
-        }
-        if(player.getInventory().contains("loveLetter")) {
+        }if(player.getInventory().contains("loveLetter")) {
             player.getInventory().remove("Envelope");
             player.getInventory().remove("loveLetter");
             Npc e = florist.getNpcList().get(0);
