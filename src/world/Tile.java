@@ -31,9 +31,11 @@ public class Tile {
             }else if(map.equals("src\\world\\Chocolate_shop.tmx")){
                 image = textureMap4.get(tileId);
             }
-            imageLoaded=true;
-            isVisible=true;
+            /*imageLoaded=true;
+            isVisible=true;*/
         }
+        imageLoaded=true;
+        isVisible=true;
     }
     public void unloadImage(){
         image=null;
