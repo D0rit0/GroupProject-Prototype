@@ -69,6 +69,7 @@ public class Map {
             case "src\\world\\Team Valentine World Map.tmx" -> collideableTileIDs = TileHandler.collideableTileIDsMap1;
             case "src\\world\\generalStore.tmx" -> collideableTileIDs = TileHandler.collideableTileIDsMap2;
             case "src\\world\\Florist.tmx" -> collideableTileIDs = TileHandler.collideableTileIDsMap2;
+            case "src\\world\\Chocolate_shop.tmx" -> collideableTileIDs = TileHandler.collideableTileIDsMap4;
         }
         for (int temp = 0; temp < layers; temp++) {
             mapData = mapLoader.loadLayerArray(mapLoader.getLayer(temp+1), mapX, mapY);

@@ -28,6 +28,10 @@ public class TileHandler {
             5,53,865,866,867,1033,1034,1002,1001,735,702,332,300,356,357,406,407,358,
             359,489,490,537,538,689,640,120,1227,1228,1259,1260,448,502,503,454,455,629,625
     };
+    public static final int [] collideableTileIDsMap4 = new int[]{
+            5,53,865,866,867,1033,1034,1002,1001,735,702,332,300,356,357,406,407,358,
+            359,489,490,537,538,689,640,120,1227,1228,1259,1260,448,502,503,454,455,629,625
+    };
 
     //checks to see if tile should be loaded based on if its within view of the panel
     public static boolean shouldTileLoad(Tile tile){

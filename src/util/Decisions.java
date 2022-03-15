@@ -23,7 +23,7 @@ public class Decisions {
         if ("Merchant0".equals(d)) {
             player.getInventory().add(new CardGame());
             System.out.print("h");
-            currentMap = florist;
+            currentMap = choco;
         }
         if ("Florist0".equals(d)) {
             player.getInventory().add(new Envelope());

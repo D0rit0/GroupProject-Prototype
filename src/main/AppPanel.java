@@ -42,6 +42,7 @@ public class AppPanel extends JPanel {
     public static final Map market = new Map("src\\world\\generalStore.tmx",
             10, 10, 7);
     public static final Map florist = new Map("src\\world\\Florist.tmx",10,11, 9);
+    public static final Map choco = new Map("src\\world\\Chocolate_shop.tmx",10,10,8);
     public static Map currentMap;
 
     public static PlayerCharacter player;
@@ -74,6 +75,8 @@ public class AppPanel extends JPanel {
         market.init();
         currentMap = florist;
         florist.init();
+        currentMap = choco;
+        choco.init();
         currentMap = overWorld;
         overWorld.init();
 
