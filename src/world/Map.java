@@ -68,7 +68,8 @@ public class Map {
         switch (mapLocation) {
             case "src\\world\\Team Valentine World Map.tmx" -> collideableTileIDs = TileHandler.collideableTileIDsMap1;
             case "src\\world\\generalStore.tmx" -> collideableTileIDs = TileHandler.collideableTileIDsMap2;
-            case "src\\world\\Florist.tmx" -> collideableTileIDs = TileHandler.collideableTileIDsMap2;
+            case "src\\world\\Florist.tmx" -> collideableTileIDs = TileHandler.collideableTileIDsMap3;
+            case "src\\world\\Chocolate_shop.tmx" -> collideableTileIDs = TileHandler.collideableTileIDsMap4;
         }
         for (int temp = 0; temp < layers; temp++) {
             mapData = mapLoader.loadLayerArray(mapLoader.getLayer(temp+1), mapX, mapY);
@@ -104,6 +105,7 @@ public class Map {
     public List<Tile> getCollideableList() {
         return collideableList;
     }
+
     public String getMapLocation(){
         return mapLocation;
     }
@@ -127,5 +129,21 @@ public class Map {
 
     public ArrayList<Npc> getNpcList(){
         return npcList;
+    }
+
+    public void shift(int x, int y){
+        for(Tile[] e: layerList){
+            for(Tile t: e){
+                if(t != null) {
+                    t.setX(x);
+                    t.setY(y);
+                }
+            }
+        }
+        for(DoorTrigger d: DoorList){
+            d.setX(x);
+            d.setY(y);
+        }
+        TileHandler.manageTiles();
     }
 }

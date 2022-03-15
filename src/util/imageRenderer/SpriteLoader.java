@@ -22,6 +22,10 @@ public class SpriteLoader {
             setImagePoint2(textureId);
         }else if (tileMap ==3) {
             setImagePoint3(textureId);
+        }else if(tileMap ==4){
+            setImagePoint4(textureId);
+        }else if(tileMap == 5){
+            setImagePoint5(textureId);
         }
         else setImagePoint(textureId);
 
@@ -38,5 +42,16 @@ public class SpriteLoader {
     private static void setImagePoint3(int tileId){
         ssRow = tileId/48+1;
         ssCol = tileId - 48*(ssRow-1);
+    }
+    private static void setImagePoint4(int tileId){
+        ssRow = 1;
+        ssCol = tileId;
+    }
+    private static void setImagePoint5(int tileId){
+        ssRow = tileId/16+1;
+        ssCol = tileId - 16*(ssRow-1);
+        if(ssCol == 0){
+            ssCol =1;
+        }
     }
 }

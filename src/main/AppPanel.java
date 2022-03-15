@@ -1,6 +1,5 @@
 package main;
 
-import entities.mobs.Mob;
 import entities.mobs.PeacefulAnimal;
 import entities.mobs.PlayerCharacter;
 
@@ -20,10 +19,8 @@ import world.Map;
 import world.Tile;
 
 import javax.swing.*;
-import javax.xml.crypto.dom.DOMCryptoContext;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import static util.TileHandler.manageTiles;
 
@@ -42,6 +39,7 @@ public class AppPanel extends JPanel {
     public static final Map market = new Map("src\\world\\generalStore.tmx",
             10, 10, 7);
     public static final Map florist = new Map("src\\world\\Florist.tmx",10,11, 9);
+    public static final Map choco = new Map("src\\world\\Chocolate_shop.tmx",10,10,8);
     public static Map currentMap;
 
     public static PlayerCharacter player;
@@ -68,17 +66,20 @@ public class AppPanel extends JPanel {
     private void run(){
         //spawns all needed objects
         spawnPlayer();
+        spawnNpc();
+        spawnDoorTriggers();
 
         //loads the maps
         currentMap = market;
         market.init();
         currentMap = florist;
         florist.init();
+        currentMap = choco;
+        choco.init();
         currentMap = overWorld;
         overWorld.init();
 
-        spawnNpc();
-        spawnDoorTriggers();
+        currentMap.shift(-1200, -464);
 
         //Game Timer
         ActionListener timerTask = e -> update();
@@ -110,10 +111,21 @@ public class AppPanel extends JPanel {
         overWorld.getNpcList().add(new Richard(player.getX() + 32, player.getY() + 64, "Richard"));
     }
     private void spawnDoorTriggers(){
-        DoorTrigger floristDoor = new DoorTrigger(1824, 832,23, overWorld.getMapLocation(), florist, null);
+        DoorTrigger floristDoor = new DoorTrigger(46*32, 33*32,23, overWorld.getMapLocation(), florist, null);
+        DoorTrigger marketDoor = new DoorTrigger(47*32, 26*32, 23, overWorld.getMapLocation(), market, null);
+        DoorTrigger chocoDoor = new DoorTrigger(57*32, 26*32, 23, overWorld.getMapLocation(), choco, null);
+
         overWorld.getDoorList().add(floristDoor);
-        florist.getDoorList().add(new DoorTrigger(16*9, 32*9,23, florist.getMapLocation(), overWorld,floristDoor));
+        overWorld.getDoorList().add(marketDoor);
+        overWorld.getDoorList().add(chocoDoor);
+
+        florist.getDoorList().add(new DoorTrigger(16*9, 32*10,23, florist.getMapLocation(), overWorld,floristDoor));
+        market.getDoorList().add(new DoorTrigger(4*32+16,9*32,23,market.getMapLocation(),overWorld,marketDoor));
+        choco.getDoorList().add(new DoorTrigger(4*32+16,9*32,23,choco.getMapLocation(),overWorld,chocoDoor));
+
         floristDoor.setLinkedDoor(florist.getDoorList().get(0));
+        marketDoor.setLinkedDoor(market.getDoorList().get(0));
+        chocoDoor.setLinkedDoor(choco.getDoorList().get(0));
     }
 
     //renders graphics

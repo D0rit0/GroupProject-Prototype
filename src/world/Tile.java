@@ -2,9 +2,7 @@ package world;
 
 import java.awt.*;
 
-import static util.imageRenderer.GraphicsHandler.textureMap;
-import static util.imageRenderer.GraphicsHandler.textureMap2;
-import static util.imageRenderer.GraphicsHandler.textureMap3;
+import static util.imageRenderer.GraphicsHandler.*;
 
 
 public class Tile {
@@ -30,10 +28,14 @@ public class Tile {
                 image = textureMap2.get(tileId);
             }else if(map.equals("src\\world\\Florist.tmx")){
                 image = textureMap3.get(tileId);
+            }else if(map.equals("src\\world\\Chocolate_shop.tmx")){
+                image = textureMap4.get(tileId);
             }
-            imageLoaded=true;
-            isVisible=true;
+            /*imageLoaded=true;
+            isVisible=true;*/
         }
+        imageLoaded=true;
+        isVisible=true;
     }
     public void unloadImage(){
         image=null;
