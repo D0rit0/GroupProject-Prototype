@@ -18,6 +18,7 @@ public class GraphicsHandler {
     public static java.util.Map<Integer, Image> textureMap = new HashMap<>();
     public static java.util.Map<Integer, Image> textureMap2 = new HashMap<>();
     public static java.util.Map<Integer, Image> textureMap3 = new HashMap<>();
+    public static java.util.Map<Integer, Image> textureMap4 = new HashMap<>();
     static java.util.Map<Integer, Image> textures = new HashMap<>();
 
     private static final ImageObserver imageObserver = (img, infoflags, x, y, width, height) -> false;
@@ -76,6 +77,27 @@ public class GraphicsHandler {
                     if(!textureMap3.containsKey(textureId)&&textureId!=0){
                         textureMap3.put(textureId, SpriteLoader.loadImage("src\\resources\\atlas"+tileMap+"_32x.png", subTextureId , tileMap));
                     }
+                }
+                else if(currentMap == choco){
+                    tileMap = 3;
+                    if(textureId > 769 && textureId < 1281){
+                        subTextureId = textureId - 768;
+                        tileMap = 2;
+                    }else if(textureId > 1281 && textureId < 2705){
+                        subTextureId = textureId - 1280;
+                        tileMap = 5;
+                    }else if(textureId > 2705 && textureId < 2807){
+                        subTextureId = textureId - 2704;
+                        tileMap = 4;
+                    }else if(textureId > 2807){
+                        subTextureId = textureId - 2806;
+                        tileMap = 1;
+                    }
+                    if(!textureMap4.containsKey(textureId)&&textureId!=0){
+                        textureMap4.put(textureId,
+                                SpriteLoader.loadImage("src\\resources\\atlas"+tileMap+"_32x.png", subTextureId , tileMap));
+                    }
+
                 }
             }
         }
