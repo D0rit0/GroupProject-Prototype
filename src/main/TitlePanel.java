@@ -15,7 +15,7 @@ public class TitlePanel extends JPanel implements ActionListener {
     private JLabel img;
     public TitlePanel(){
         menuscreen = new JFrame("Start Screen");
-        ImageIcon image = new ImageIcon(getClass().getResource("download.png"));
+        ImageIcon image = new ImageIcon(getClass().getResource("StartScreen.png"));
         img = new JLabel(image);
         startbutton = new JButton("Start");
         startbutton.setPreferredSize(new Dimension(300, 300));
