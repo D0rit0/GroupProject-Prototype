@@ -14,8 +14,7 @@ public class Merchant extends QuestGiver{
         loadImage("src\\resources\\Male\\Male 12-1.png");
     }
     public void dialogueCheck() {
-        if(Decisions.isQuestStep2()){
-        }
+
 
     }
 }

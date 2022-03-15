@@ -1,6 +1,6 @@
 package entities.items;
 
-public class pinkCake extends QuestItem{
+public class PinkCake extends QuestItem{
 // part of the bundle you give to your crush
 
 }

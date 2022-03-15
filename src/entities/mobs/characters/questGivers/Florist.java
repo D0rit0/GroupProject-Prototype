@@ -1,7 +1,10 @@
 package entities.mobs.characters.questGivers;
 
+import entities.mobs.Npc;
 import main.DialogueBox;
+import util.Decisions;
 
+import static main.AppPanel.florist;
 import static main.AppPanel.player;
 
 public class Florist extends QuestGiver{
@@ -17,6 +20,16 @@ public class Florist extends QuestGiver{
 
     }
     public void dialogueCheck() {
+        if(Decisions.isQuestStep2()){
+            if(player.getInventory().contains("loveLetter")) {
+                player.getInventory().remove("Envelope");
+                player.getInventory().remove("loveLetter");
+                Npc e = florist.getNpcList().get(0);
+                e.setDialogue(new String [] {"You didn't read this did you ...", "Here's your bouquet. Get out of here."});
+            }
+
+
+        }
 
     }
 }
