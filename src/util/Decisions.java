@@ -24,6 +24,9 @@ public class Decisions {
     public static boolean isQuestStep2(){
         return questStep2;
     }
+    public static void setQuestStep2(boolean questStep){
+        questStep2 = questStep;
+    }
 
     private static boolean questStep3 = false;
     public static boolean isQuestStep3(){
@@ -47,18 +50,23 @@ public class Decisions {
         if ("Florist0".equals(d)) {
             player.getInventory().add(envelope);
             Npc e = florist.getNpcList().get(0);
-            e.setDialogue(new String []{"Really! that means so much thank you!", "I have lost an important letter.", "Can you find it?"});
+            e.setDialogue(new String[]{"Really! that means so much thank you!", "I have lost an important letter.", "Can you find it?"});
             questStep3 = true;
-        } if ("Florist1".equals(d)) {
-
         }
 
         if ("Baker0".equals(d)) {
             player.getInventory().add(cake);
-            Npc b = overWorld.getNpcList().get(1);
-            b.setDialogue(new String []{"Such a sweetheart.", "It's for Richard.", "Here's that cake for delivery!"});
+            Npc b = choco.getNpcList().get(0);
+            b.setDialogue(new String[]{"Such a sweetheart.", "It's for Richard.", "Here's that cake for delivery!"});
             questStep2 = true;
-        } if ("Baker1".equals(d)) {
+        }
+
+        if ("Cat0".equals(d)) {
+            Npc c = overWorld.getNpcList().get(0);
+            c.setDialogue(new String[] {"the cat purrs and rubs against your leg."});
+        } else {
+            Npc c = overWorld.getNpcList().get(0);
+            c.setDialogue(new String []{"the cat hisses at you and walks away."});
         }
 
         if (player.getInventory().contains(flowers)){

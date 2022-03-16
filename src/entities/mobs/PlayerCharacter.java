@@ -30,6 +30,7 @@ public class PlayerCharacter extends Mob {
         loadImage(imagePath);
         grounded = false;
     }
+    //found:https://www.javatpoint.com/singleton-design-pattern-in-java
     //this method allows for other classes to access this single instance of entities.mobs.PlayerCharacter
     //it is also in a synchronized block creating a thread safe environment
     public synchronized static PlayerCharacter getInstance(){

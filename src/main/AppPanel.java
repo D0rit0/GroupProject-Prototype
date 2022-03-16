@@ -1,5 +1,6 @@
 package main;
 
+import entities.items.loveLetterEntity;
 import entities.mobs.PeacefulAnimal;
 import entities.mobs.PlayerCharacter;
 
@@ -99,10 +100,12 @@ public class AppPanel extends JPanel {
     private void spawnNpc(){
         overWorld.getNpcList().add(new PeacefulAnimal(player.getX() +32, player.getY(), "Cat"));
         florist.getNpcList().add(new Florist(3*32, 128, "Florist"));
-        overWorld.getNpcList().add(new Baker(player.getX() + 32, player.getY() + 32, "Baker"));
+        choco.getNpcList().add(new Baker(4*32,  6*32, "Baker"));
         overWorld.getNpcList().add(new Merchant(player.getX() - 32, player.getY(), "Merchant"));
         overWorld.getNpcList().add(new Crush(player.getX() +32, player.getY() - 64, "<3"));
         overWorld.getNpcList().add(new Richard(player.getX() + 32, player.getY() + 64, "Richard"));
+
+        overWorld.getItemList().add(new loveLetterEntity(player.getX()+36*32,player.getY()-6*32));
     }
     private void spawnDoorTriggers(){
         DoorTrigger floristDoor = new DoorTrigger(46*32, 33*32,23, overWorld.getMapLocation(), florist, null);

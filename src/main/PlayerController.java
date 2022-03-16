@@ -1,5 +1,6 @@
 package main;
 
+import entities.Entity;
 import entities.mobs.Mob;
 import entities.mobs.PlayerCharacter;
 
@@ -128,6 +129,9 @@ public class PlayerController {
                 for(Mob mob: currentMap.getNpcList()){
                     mob.setY(-dy/2);
                 }
+                for(Entity e: currentMap.getItemList()){
+                    e.setY(-dy/2);
+                }
             }else if (!AppPanel.mapScrollY && AppPanel.mapScrollX){
                 player.setY(dy/2);
                 for(Tile[] tileList: currentMap.getLayerList()) {
@@ -140,6 +144,9 @@ public class PlayerController {
                 currentMap.moveDoorsX(-dx/2);
                 for(Mob mob: currentMap.getNpcList()){
                     mob.setX(-dx/2);
+                }
+                for(Entity e: currentMap.getItemList()){
+                    e.setX(-dx/2);
                 }
             }else if(AppPanel.mapScrollX){
                 for(Tile[] tileList: currentMap.getLayerList()) {
@@ -155,6 +162,10 @@ public class PlayerController {
                 for(Mob mob: currentMap.getNpcList()){
                     mob.setX(-dx/2);
                     mob.setY(-dy/2);
+                }
+                for(Entity e: currentMap.getItemList()){
+                    e.setY(-dy/2);
+                    e.setX(-dx/2);
                 }
             }else{
                 player.setX(dx/2);
@@ -175,6 +186,9 @@ public class PlayerController {
                 for(Mob mob: currentMap.getNpcList()){
                     mob.setX(-dx);
                 }
+                for(Entity e: currentMap.getItemList()){
+                    e.setX(-dx);
+                }
             }if(!AppPanel.mapScrollY) {
                 player.setY(dy);
             }else{
@@ -182,13 +196,15 @@ public class PlayerController {
                     for (Tile scenery : tileList) {
                         if(scenery != null) {
                             scenery.setY(-dy);
-
                         }
                     }
                 }
                 currentMap.moveDoorsY(-dy);
                 for(Mob mob: currentMap.getNpcList()){
                     mob.setY(-dy);
+                }
+                for(Entity e: currentMap.getItemList()){
+                    e.setY(-dy);
                 }
             }
         }
