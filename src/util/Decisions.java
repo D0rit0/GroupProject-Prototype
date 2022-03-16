@@ -56,7 +56,7 @@ public class Decisions {
         if ("Baker0".equals(d)) {
             player.getInventory().add(cake);
             Npc b = overWorld.getNpcList().get(1);
-            b.setDialogue(new String []{"Such a sweetheart.", "Here's that cake for delivery."});
+            b.setDialogue(new String []{"Such a sweetheart.", "It's for Richard.", "Here's that cake for delivery!"});
             questStep2 = true;
         } if ("Baker1".equals(d)) {
         }
