@@ -3,6 +3,10 @@ package entities.mobs.characters.questGivers;
 import main.DialogueBox;
 import util.Decisions;
 
+import static main.AppPanel.player;
+import static util.Decisions.*;
+import static util.Decisions.pinkCake;
+
 public class Merchant extends QuestGiver{
     public Merchant(int x, int y, String name) {
 
@@ -14,7 +18,13 @@ public class Merchant extends QuestGiver{
         loadImage("src\\resources\\Male\\Male 12-1.png");
     }
     public void dialogueCheck() {
-
+        if (player.getInventory().contains(book)) {
+            setDialogue(new String[]{"Thank you for your business."});
+        } else if (player.getInventory().contains(teddyBear)) {
+            setDialogue(new String[]{"Have a nice day."});
+        } else if (player.getInventory().contains(cardGame)){
+            setDialogue(new String [] {"Happy Valentine's day!"});
+        }
 
     }
 }

@@ -23,6 +23,7 @@ public class Baker extends QuestGiver {
         if (player.getInventory().contains(receipt)) {
             setDialogue(new String[]{"Thank you! Here's a pink Cake on the house."});
             player.getInventory().add(pinkCake);
+            player.getInventory().remove(receipt);
         } else if (player.getInventory().contains(cake)) {
             setDialogue(new String[]{"Ok see you when you get back."});
         } else if (player.getInventory().contains(pinkCake)){

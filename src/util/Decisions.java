@@ -9,9 +9,15 @@ public class Decisions {
 
     public static Cake cake = new Cake();
     public static CardGame cardGame = new CardGame();
-    public static Envelope loveLetter = new Envelope();
+    public static loveLetter loveLetter = new loveLetter();
     public static Receipt receipt = new Receipt();
+    public static Envelope envelope = new Envelope();
     public static PinkCake pinkCake = new PinkCake();
+    public static Flowers flowers = new Flowers();
+    public static Book book = new Book();
+    public static TeddyBear teddyBear = new TeddyBear();
+
+    public static int x = 0;
 
     private static boolean questStep2 = false;
 
@@ -21,23 +27,31 @@ public class Decisions {
 
     private static boolean questStep3 = false;
     public static boolean isQuestStep3(){
-        return questStep2;
+        return questStep3;
+    }
+    private static boolean questStep4 = false;
+    public static boolean isQuestStep4(){
+        return questStep4;
     }
 
 
     public static void outCome(String d){
         if ("Merchant0".equals(d)) {
-            player.getInventory().add(new CardGame());
-            System.out.print("h");
-            currentMap = choco;
+            player.getInventory().add(cardGame);
+        } if ("Merchant1".equals(d)){
+            player.getInventory().add(teddyBear);
+        } if ("Merchant2".equals(d)){
+            player.getInventory().add(book);
         }
+
         if ("Florist0".equals(d)) {
-            player.getInventory().add(new Envelope());
+            player.getInventory().add(envelope);
             Npc e = florist.getNpcList().get(0);
             e.setDialogue(new String []{"Really! that means so much thank you!", "I have lost an important letter.", "Can you find it?"});
+            questStep3 = true;
         } if ("Florist1".equals(d)) {
 
-        }// for when u turn in the quest item to florist.
+        }
 
         if ("Baker0".equals(d)) {
             player.getInventory().add(cake);
@@ -45,6 +59,25 @@ public class Decisions {
             b.setDialogue(new String []{"Such a sweetheart.", "Here's that cake for delivery."});
             questStep2 = true;
         } if ("Baker1".equals(d)) {
+        }
+
+        if (player.getInventory().contains(flowers)){
+            x++;
+        }
+        if (player.getInventory().contains(pinkCake)){
+            x++;
+        }
+        if (player.getInventory().contains(book)){
+            x++;
+        }
+        if (player.getInventory().contains(teddyBear)){
+            x++;
+        }
+        if (player.getInventory().contains(cardGame)){
+            x++;
+        }
+        if (x >= 3) {
+            questStep4 = true;
         }
 
 
