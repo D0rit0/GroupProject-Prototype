@@ -25,7 +25,6 @@ import java.awt.event.ActionListener;
 import static util.TileHandler.manageTiles;
 
 public class AppPanel extends JPanel {
-    private final String imagePath="src\\resources\\atlas1_32x.png";
 
     public static final int width = 800;
     public static final int height = 800;
@@ -45,14 +44,9 @@ public class AppPanel extends JPanel {
     public static PlayerCharacter player;
     public static PlayerController playerController = new PlayerController();
 
-    //public static final ArrayList<Mob> mobList = new ArrayList<>();
-    //public static final ArrayList<DoorTrigger> DoorList = new ArrayList<>();
-
     //Stole game state idea from https://www.youtube.com/watch?v=_SJU99LU1IQ
     public static int gameState;
-    public static final int titleScreen = 0;
     public static final int running = 1;
-    public static final int paused = 2;
     public static final int dialogue = 3;
 
     AppPanel(){

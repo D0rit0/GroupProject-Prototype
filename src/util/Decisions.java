@@ -1,63 +1,86 @@
 package util;
 
-import entities.items.Cake;
-import entities.items.CardGame;
-import entities.items.Envelope;
-import entities.items.pinkCake;
+import entities.items.*;
 import entities.mobs.Npc;
-import entities.mobs.characters.questGivers.Florist;
-import entities.mobs.characters.questGivers.Merchant;
-import entities.mobs.characters.questGivers.QuestGiver;
-import main.AppPanel;
 
 import static main.AppPanel.*;
 
 public class Decisions {
 
-    static Cake cake = new Cake();
-    static CardGame cardGame = new CardGame();
-    static Envelope loverLetter = new Envelope();
+    public static Cake cake = new Cake();
+    public static CardGame cardGame = new CardGame();
+    public static loveLetter loveLetter = new loveLetter();
+    public static Receipt receipt = new Receipt();
+    public static Envelope envelope = new Envelope();
+    public static PinkCake pinkCake = new PinkCake();
+    public static Flowers flowers = new Flowers();
+    public static Book book = new Book();
+    public static TeddyBear teddyBear = new TeddyBear();
+
+    public static int x = 0;
+
+    private static boolean questStep2 = false;
+
+    public static boolean isQuestStep2(){
+        return questStep2;
+    }
+
+    private static boolean questStep3 = false;
+    public static boolean isQuestStep3(){
+        return questStep3;
+    }
+    private static boolean questStep4 = false;
+    public static boolean isQuestStep4(){
+        return questStep4;
+    }
 
 
     public static void outCome(String d){
         if ("Merchant0".equals(d)) {
-            player.getInventory().add(new CardGame());
-            System.out.print("h");
-            currentMap = choco;
+            player.getInventory().add(cardGame);
+        } if ("Merchant1".equals(d)){
+            player.getInventory().add(teddyBear);
+        } if ("Merchant2".equals(d)){
+            player.getInventory().add(book);
         }
+
         if ("Florist0".equals(d)) {
-            player.getInventory().add(new Envelope());
-            System.out.print("y");
+            player.getInventory().add(envelope);
             Npc e = florist.getNpcList().get(0);
-            e.setDialogue(new String []{"Really! that means so much thank you!"});
-        }if ("Florist1".equals(d)) {
-            System.out.print("y");
+            e.setDialogue(new String []{"Really! that means so much thank you!", "I have lost an important letter.", "Can you find it?"});
+            questStep3 = true;
+        } if ("Florist1".equals(d)) {
+
         }
-        if(player.getInventory().contains(loverLetter)) {
-            player.getInventory().remove("Envelope");
-            player.getInventory().remove(loverLetter);
-            Npc e = florist.getNpcList().get(0);
-            e.setDialogue(new String [] {"You didn't read this did you ...", "Here's your bouquet. Get out of here."});
-        } // for when u turn in the quest item to florist.
 
         if ("Baker0".equals(d)) {
             player.getInventory().add(cake);
-            System.out.print("y");
             Npc b = overWorld.getNpcList().get(1);
-            b.setDialogue(new String []{"Such a sweetheart."});
+            b.setDialogue(new String []{"Such a sweetheart.", "It's for Richard.", "Here's that cake for delivery!"});
+            questStep2 = true;
         } if ("Baker1".equals(d)) {
-            System.out.print("y");
         }
-        if (player.getInventory().contains("Receipt")){
-            Npc b = overWorld.getNpcList().get(1);
-            b.setDialogue(new String [] {"Thank you!, here's a pink Cake on the house."});
-            player.getInventory().add(new pinkCake()); // i dont think this will work but it is fixable
+
+        if (player.getInventory().contains(flowers)){
+            x++;
         }
-        if (player.getInventory().contains(cake)){
-            //richard gives u receipt for the delivery of cake and says
-            //"Thanks. You know that girl in town? i think she likes reading."
-            // player.getInventory().remove("Cake");
+        if (player.getInventory().contains(pinkCake)){
+            x++;
         }
+        if (player.getInventory().contains(book)){
+            x++;
+        }
+        if (player.getInventory().contains(teddyBear)){
+            x++;
+        }
+        if (player.getInventory().contains(cardGame)){
+            x++;
+        }
+        if (x >= 3) {
+            questStep4 = true;
+        }
+
+
 
 
 
