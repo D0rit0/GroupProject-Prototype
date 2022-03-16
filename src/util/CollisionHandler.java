@@ -1,6 +1,7 @@
 package util;
 
 import entities.Entity;
+import entities.items.loveLetterEntity;
 import entities.mobs.Npc;
 import world.DoorTrigger;
 import world.Tile;
@@ -56,6 +57,15 @@ public class CollisionHandler {
             Rectangle r2 = player.getBounds();
             if (r1.intersects(r2) && e.isInteractable()) {
                 e.interact();
+            }
+        }
+        for(Entity e: currentMap.getItemList()){
+            Rectangle r1 = e.getBounds();
+            Rectangle r2 = player.getBounds();
+            if (r1.intersects(r2) && e.isInteractable()) {
+                if(e instanceof loveLetterEntity) {
+                    ((loveLetterEntity) e).interact();
+                }
             }
         }
     }

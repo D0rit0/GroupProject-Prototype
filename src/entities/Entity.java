@@ -60,6 +60,10 @@ public abstract class Entity {
         return interactable;
     }
 
+    public boolean isVisible() {
+        return isVisible;
+    }
+
     public Rectangle getBounds(){
         return new Rectangle(x,y,width,height);
     }

@@ -1,5 +1,7 @@
 package util.imageRenderer;
 
+import entities.Entity;
+import entities.items.loveLetterEntity;
 import entities.mobs.Mob;
 import entities.mobs.Npc;
 import entities.mobs.PlayerCharacter;
@@ -111,6 +113,13 @@ public class GraphicsHandler {
                     if (tile.isImageLoaded() && tile.isVisible()) {
                         g2.drawImage(tile.getImage(), tile.getX(), tile.getY(), imageObserver);
                     }
+                }
+            }
+        }
+        for(Entity e: currentMap.getItemList()){
+            if(e instanceof loveLetterEntity){
+                if(e.isVisible()) {
+                    g2.drawImage(e.getImage(), e.getX(), e.getY(), imageObserver);
                 }
             }
         }

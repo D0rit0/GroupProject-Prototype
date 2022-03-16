@@ -1,5 +1,6 @@
 package world;
 
+import entities.Entity;
 import entities.mobs.Npc;
 import util.MapLoader;
 import util.TileHandler;
@@ -20,6 +21,7 @@ public class Map {
     private final MapLoader mapLoader;
 
     private ArrayList<Npc> npcList = new ArrayList<Npc>();
+    private ArrayList<Entity> itemList = new ArrayList<>();
 
     public Map(String mapLocation, int mapX, int mapY, int layers){
         this.mapLocation = mapLocation;
@@ -129,6 +131,10 @@ public class Map {
 
     public ArrayList<Npc> getNpcList(){
         return npcList;
+    }
+
+    public ArrayList<Entity> getItemList() {
+        return itemList;
     }
 
     public void shift(int x, int y){

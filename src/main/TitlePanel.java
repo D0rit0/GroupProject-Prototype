@@ -21,9 +21,7 @@ public class TitlePanel extends JPanel implements ActionListener {
         startbutton.setPreferredSize(new Dimension(300, 300));
         startbutton.setBounds(300, 600, 200, 50);
         startbutton.addActionListener(this);
-        JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        panel.add(img);
+        JPanel panel = new JPanel();panel.add(img);
         img.add(startbutton);
         menuscreen.add(panel, BorderLayout.CENTER);
         menuscreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

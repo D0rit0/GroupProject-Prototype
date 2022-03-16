@@ -1,5 +1,8 @@
 package entities.items;
 
-public class loveLetter extends QuestItem{
-    //quest item to give to florist in exchange for flowers
+import entities.Entity;
+
+import static main.AppPanel.player;
+
+public class loveLetter extends QuestItem {
 }

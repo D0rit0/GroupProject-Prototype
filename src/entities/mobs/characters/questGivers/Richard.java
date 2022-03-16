@@ -14,18 +14,16 @@ public class Richard extends QuestGiver{
 
         super(x, y, "Richard");
 
-        dialogue = new DialogueBox(new String[]{"It's a beautiful day today.", "I like Valentine's Day.", "Hello."}, this);
+        dialogue = new DialogueBox(new String[]{"Hello!","It's a beautiful day today.", "I like Valentine's Day."}, this);
 
         loadImage("src\\resources\\Male\\Male 06-3.png");
 
     }
     public void dialogueCheck() {
         if(Decisions.isQuestStep2()) {
-
             if (player.getInventory().contains(cake)) {
                 player.getInventory().add(receipt);
-                Npc r = overWorld.getNpcList().get(4);
-                r.setDialogue(new String[]{"Wondrous. Here's proof of delivery.", "You know that girl in town?", "I hear she likes to read.", "Happy Valentine's Day."});
+                setDialogue(new String[]{"Wondrous. Here's proof of delivery.", "You know that girl in town?", "I hear she likes to read.", "Happy Valentine's Day."});
                 player.getInventory().remove(cake);
             }
         }

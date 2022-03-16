@@ -28,7 +28,7 @@ public class Crush extends QuestGiver {
                 setDialogue(new String[] {"This is nice."});
             }
             if (player.getInventory().contains(cardGame)){
-                setDialogue(new String [] {"How fun. Would you like to play this together?"});
+                setDialogue(new String [] {"Oh wow... how fun...", "Would you like to play this together?"});
 
             }
 
