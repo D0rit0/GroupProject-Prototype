@@ -61,6 +61,14 @@ public class Decisions {
             questStep2 = true;
         }
 
+        if ("Cat0".equals(d)) {
+            Npc c = overWorld.getNpcList().get(0);
+            c.setDialogue(new String[] {"the cat purrs and rubs against your leg."});
+        } else {
+            Npc c = overWorld.getNpcList().get(0);
+            c.setDialogue(new String []{"the cat hisses at you and walks away."});
+        }
+
         if (player.getInventory().contains(flowers)){
             x++;
         }

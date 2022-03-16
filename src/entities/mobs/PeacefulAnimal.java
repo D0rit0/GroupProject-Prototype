@@ -4,11 +4,14 @@ import main.DialogueBox;
 
 public class PeacefulAnimal extends Npc {
     public PeacefulAnimal(int x, int y, String type) {
-        super(x, y, "peacefulAnimal");
+        super(x, y, "Cat");
 
-        dialogue = new DialogueBox(new String[]{"Hello my name is Jefferson", "Hello World 2"}, this);
+        dialogue = new DialogueBox(new String[] {"the cat meows at you expectantly.", "MEOW", "Pet the cat?", "meow"},
+                this, "Pet the cat?", new String[] {"Yes", "No"});
 
         loadImage("src\\resources\\Animal\\"+type+" 01-1.png");
+
+
 
         walkState1=1;
         walkState2=3;
@@ -20,6 +23,5 @@ public class PeacefulAnimal extends Npc {
 
         interactable = true;
     }
-    public void pet(){}
-    public void feed(){}
+
 }
