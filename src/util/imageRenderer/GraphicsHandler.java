@@ -32,11 +32,11 @@ public class GraphicsHandler {
         if(gameState==dialogue){
             player.currentDialogue.renderDialogueBox(g2);
         }
-        g2.setColor(Color.RED);
+        /*g2.setColor(Color.RED);
         g2.drawString(player.getX()+", " + player.getY(), 20, 20);
         for(DoorTrigger e :currentMap.getDoorList()){
             g2.fillRect(e.getX(),e.getY(),32,32);
-        }
+        }*/
 
     }
 

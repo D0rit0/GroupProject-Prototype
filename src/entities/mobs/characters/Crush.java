@@ -18,7 +18,7 @@ public class Crush extends QuestGiver {
     }
 
     public void dialogueCheck() {
-        if (Decisions.isQuestStep4()) {
+        if (Decisions.isQuestStep4() && !player.getInventory().contains(loveLetter) && player.getInventory().contains(flowers)) {
             if (player.getInventory().contains(book)) {
                 setDialogue(new String[]{"Wow... You didn't have to do this", "Thank you so much!",
                         "*your crush steps forward and...", "gives you a big kiss on the forehead.*", "<3 <3 <3"});

@@ -101,7 +101,7 @@ public class AppPanel extends JPanel {
         overWorld.getNpcList().add(new PeacefulAnimal(player.getX() +32, player.getY(), "Cat"));
         florist.getNpcList().add(new Florist(3*32, 128, "Florist"));
         choco.getNpcList().add(new Baker(4*32,  6*32, "Baker"));
-        overWorld.getNpcList().add(new Merchant(player.getX() - 32, player.getY(), "Merchant"));
+        market.getNpcList().add(new Merchant(3*32, 5*32, "Merchant"));
         overWorld.getNpcList().add(new Crush(player.getX() +32, player.getY() - 64, "<3"));
         overWorld.getNpcList().add(new Richard(player.getX() + 32, player.getY() + 64, "Richard"));
 
