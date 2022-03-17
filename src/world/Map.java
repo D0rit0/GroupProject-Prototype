@@ -20,8 +20,8 @@ public class Map {
     private final int layers;
     private final MapLoader mapLoader;
 
-    private ArrayList<Npc> npcList = new ArrayList<Npc>();
-    private ArrayList<Entity> itemList = new ArrayList<>();
+    private final ArrayList<Npc> npcList = new ArrayList<>();
+    private final ArrayList<Entity> itemList = new ArrayList<>();
 
     public Map(String mapLocation, int mapX, int mapY, int layers){
         this.mapLocation = mapLocation;
